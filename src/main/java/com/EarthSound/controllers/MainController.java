@@ -462,7 +462,7 @@ public class MainController {
                     table_playlist.refresh();
                     table_playlist.getColumns().remove(colBtnSub_unSub);
                     Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré tus playlists", "¡Encontrarás las que estás suscrito y las que has creado!");
-                } else {
+                } else if(newValue.equals("Todas las Playlist")) {
                     table_playlist.setItems(null);
                     table_playlist.setItems(FXCollections.observableArrayList(PlayListDAO.listAll()));
                     table_comments.setItems(null);
