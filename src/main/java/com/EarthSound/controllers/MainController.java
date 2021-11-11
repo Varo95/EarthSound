@@ -460,7 +460,6 @@ public class MainController {
                     table_comments.setItems(null);
                     table_pl_songs.setItems(null);
                     table_playlist.refresh();
-                    table_playlist.getColumns().remove(colBtnSub_unSub);
                     Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré tus playlists", "¡Encontrarás las que estás suscrito y las que has creado!");
                 } else if(newValue.equals("Todas las Playlist")) {
                     table_playlist.setItems(null);
@@ -468,7 +467,6 @@ public class MainController {
                     table_comments.setItems(null);
                     table_pl_songs.setItems(null);
                     table_playlist.refresh();
-                    table_playlist.getColumns().add(colBtnSub_unSub);
                     Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré TODAS las playlists", "¡Disfruta de la música de otros usuarios!");
                 }
             }
@@ -543,6 +541,7 @@ public class MainController {
             }
         };
         colBtnSub_unSub.setCellFactory(cellFactoryS);
+        table_playlist.getColumns().add(colBtnSub_unSub);
     }
 
     /**
