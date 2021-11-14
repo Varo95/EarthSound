@@ -19,8 +19,8 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
     private static final Logger logger = LoggerFactory.getLogger(PlayListDAO.class);
 
     private enum querys {
-        SELECT_ALL("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) from suscribe) as nsubs FROM playlist"),
-        SELECT_BY_ID("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) from suscribe) as nsubs FROM playlist WHERE playlist.id=? GROUP BY playlist.id"),
+        SELECT_ALL("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) from suscribe WHERE playlist.id=suscribe.id_playlist) as nsubs FROM playlist"),
+        SELECT_BY_ID("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) FROM suscribe WHERE id_playlist=?) as nsubs FROM playlist WHERE playlist.id=?"),
         INSERT("INSERT INTO playlist(name,description,id_ucreator) VALUES(?,?,?)"),
         UPDATE_BY_ID("UPDATE playlist SET name=?,description=?,id_ucreator=? WHERE id=?"),
         DELETE_BY_ID("DELETE FROM playlist WHERE id=?"),
@@ -50,6 +50,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
     public PlayListDAO(long id) {
         super();
         List<Object> params = new ArrayList<>();
+        params.add(id);
         params.add(id);
         ResultSet rs = SQL.execQuery(querys.SELECT_BY_ID.getQ(), params);
         if (rs != null) {

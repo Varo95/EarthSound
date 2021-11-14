@@ -1,7 +1,7 @@
 package com.EarthSound.interfaces;
+
 import com.EarthSound.interfaces.IBeans.IPlayList;
 import com.EarthSound.interfaces.IBeans.ISong;
-import com.EarthSound.interfaces.IBeans.IComment;
 
 public interface SQL extends IDAO {
     interface IArtistDAO extends SQL {

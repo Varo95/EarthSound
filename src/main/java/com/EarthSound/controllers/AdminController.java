@@ -295,8 +295,8 @@ public class AdminController {
         });
         setExamineButtons(btn_u_artist_examine, tf_u_artist_photoURL, btn_u_disc_examine, tf_u_disc_photoURL);
         btn_u_song_examine.setOnAction(event -> {
-            String file = Tools.selectFile(true);
             if (event.getEventType().getName().equals("ACTION")) {
+                String file = Tools.selectFile(true);
                 tf_u_song_songURL.setText((file == null) ? "" : file);
                 tf_u_song_name.setText(Tools.getNameFileOfSound(file));
                 Tools.refreshValuesOfSong(file, tf_u_song_duration, btn_u_song_play);
@@ -734,6 +734,12 @@ public class AdminController {
                 tf_r_song_duration.setText(newValue.getDuration() + "");
                 tf_r_song_songURL.setText(newValue.getSongURL());
                 Tools.refreshValuesOfSong(newValue.getSongURL(), tf_r_song_duration, btn_r_song_play);
+            }
+        });
+        cb_r_genre_sl_genre.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=null){
+                selected_genre_remove = new GenreDAO(newValue.getId());
+                tf_r_genre_name.setText(newValue.getName());
             }
         });
 

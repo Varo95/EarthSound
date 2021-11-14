@@ -217,6 +217,7 @@ public class MainController {
         });
         //-------------------------------------------
         marqueeAnimation();
+        configureSubAndUnsubButtonsColumn();
     }
 
     private void marqueeAnimation() {
@@ -461,7 +462,7 @@ public class MainController {
                     table_pl_songs.setItems(null);
                     table_playlist.refresh();
                     Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré tus playlists", "¡Encontrarás las que estás suscrito y las que has creado!");
-                } else if(newValue.equals("Todas las Playlist")) {
+                } else if (newValue.equals("Todas las Playlist")) {
                     table_playlist.setItems(null);
                     table_playlist.setItems(FXCollections.observableArrayList(PlayListDAO.listAll()));
                     table_comments.setItems(null);
@@ -479,8 +480,7 @@ public class MainController {
         tf_comment.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) onClickSendComment();
         });
-        //----------------------------------------------------------------------------------
-        configureSubAndUnsubButtonsColumn();
+        //---------------------------------------------------------------------------------
     }
 
     /**
@@ -501,38 +501,34 @@ public class MainController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            for (IPlayList p : table_playlist.getItems()) {
-                                if (p.getCreator().getName().equals(actual_user.getName())) {
-                                    setGraphic(null);
-                                    setText("¡Eres el creador!");
-                                } else {
-                                    PlayListDAO pl = new PlayListDAO(getTableView().getItems().get(getIndex()).getId());
-                                    List<IUser> lista_subs = pl.getSubs();
-                                    if (lista_subs != null && lista_subs.size() != 0) {
-                                        for (IUser u : pl.getSubs()) {
-                                            if (u.getName().equals(actual_user.getName())) {
-                                                btn.setText("❎");
-                                                btn.setStyle("-fx-background-color: rgb(241,65,65);");
-                                                setGraphic(btn);
-                                                btn.setOnAction((ActionEvent event) -> {
-                                                    if (actual_user.unSubscribe(pl))
-                                                        Dialog.showInformation("¡Éxito!", "Has cancelado tu suscripcion", "Dejaste de seguir la lista: " + pl.getName());
-                                                    table_playlist.setItems(FXCollections.observableArrayList(PlayListDAO.listAll()));
-                                                    table_playlist.refresh();
-                                                });
-                                            }
-                                        }
-                                    } else {
-                                        btn.setText("✅");
-                                        btn.setStyle("-fx-background-color: rgb(132,227,70);");
+                            if (getTableView().getItems().get(getIndex()).getCreator().getId() == actual_user.getId()) {
+                                setGraphic(null);
+                                setText("¡Eres el creador!");
+                            } else {
+                                PlayListDAO pl = new PlayListDAO(getTableView().getItems().get(getIndex()).getId());
+                                List<IUser> sub_list = pl.getSubs();
+                                if (sub_list != null && sub_list.size() != 0) {
+                                    if (sub_list.contains(actual_user)) {
+                                        btn.setText("❎");
+                                        btn.setStyle("-fx-background-color: rgb(241,65,65);");
                                         setGraphic(btn);
                                         btn.setOnAction((ActionEvent event) -> {
-                                            if(actual_user.subscribe(pl))
-                                                Dialog.showInformation("¡Éxito!", "Te has suscrito", "Ahora sigues la lista: " + pl.getName());
+                                            if (actual_user.unSubscribe(pl))
+                                                Dialog.showInformation("¡Éxito!", "Has cancelado tu suscripcion", "Dejaste de seguir la lista: " + pl.getName());
                                             table_playlist.setItems(FXCollections.observableArrayList(PlayListDAO.listAll()));
                                             table_playlist.refresh();
                                         });
                                     }
+                                } else {
+                                    btn.setText("✅");
+                                    btn.setStyle("-fx-background-color: rgb(132,227,70);");
+                                    setGraphic(btn);
+                                    btn.setOnAction((ActionEvent event) -> {
+                                        if (actual_user.subscribe(pl))
+                                            Dialog.showInformation("¡Éxito!", "Te has suscrito", "Ahora sigues la lista: " + pl.getName());
+                                        table_playlist.setItems(FXCollections.observableArrayList(PlayListDAO.listAll()));
+                                        table_playlist.refresh();
+                                    });
                                 }
                             }
                         }
