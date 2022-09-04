@@ -55,6 +55,7 @@ public class DiscDAO extends Disc implements IDiscDAO {
                     setArtist(d.getArtist());
                     setSongs(null);
                 }
+                rs.close();
             } catch (SQLException e) {
                 logger.error("Hubo un error en la conexión a la base de datos al instanciar el DiscDAO con el id: "+id+
                         "\nCon el mensaje:\n"+e.getMessage());
@@ -77,6 +78,7 @@ public class DiscDAO extends Disc implements IDiscDAO {
                     result.add(s);
                 }
                 super.setSongs(result);
+                rs.close();
             }
         } catch (SQLException e) {
             logger.error("Hubo un error en la conexión a la base de datos al replegar las canciones del disco:"+getName()+

@@ -54,6 +54,7 @@ public class ArtistDAO extends Artist implements IArtistDAO {
                     setPhoto(a.getPhotoURL());
                     setDiscs(null);
                 }
+                rs.close();
             } catch (SQLException e) {
                 logger.error("Hubo un error en la conexión a la base de datos al instanciar el ArtistaDAO con el id: "+id+
                         "\nCon el mensaje:\n"+e.getMessage());
@@ -147,6 +148,7 @@ public class ArtistDAO extends Artist implements IArtistDAO {
                 Artist a = instanceBuilder(rs);
                 list.add(a);
             }
+            rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error en la conexión a la base de datos al cargar la lista de Artistas:"+
                     "\nCon el mensaje:\n"+e.getMessage());

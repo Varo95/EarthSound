@@ -5,321 +5,303 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.EarthSound.controllers.MainController">
-   <left>
-      <GridPane alignment="TOP_CENTER" vgap="1.0" BorderPane.alignment="TOP_CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints valignment="TOP" vgrow="NEVER" />
-          <RowConstraints valignment="TOP" vgrow="NEVER" />
-          <RowConstraints valignment="TOP" vgrow="NEVER" />
-        </rowConstraints>
-         <children>
-            <JFXButton fx:id="btn_inicio" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" ripplerFill="#9be7ff" style="-fx-background-color: #64b5f6;" text="Inicio" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" />
-            <JFXButton fx:id="searchbutton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" ripplerFill="#9be7ff" style="-fx-background-color: #64b5f6;" text="Buscar" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-            <JFXButton fx:id="myplbutton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" ripplerFill="#9be7ff" style="-fx-background-color: #64b5f6;" text="Tu biblioteca" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
-         </children>
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.EarthSound.controllers.MainController">
+    <left>
+        <GridPane alignment="TOP_CENTER" vgap="1.0" BorderPane.alignment="TOP_CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints valignment="TOP" vgrow="NEVER" />
+                <RowConstraints valignment="TOP" vgrow="NEVER" />
+                <RowConstraints valignment="TOP" vgrow="NEVER" />
+            </rowConstraints>
+            <JFXButton fx:id="btn_start" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" ripplerFill="#9be7ff" style="-fx-background-color: #64b5f6;" text="Inicio" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" />
+            <JFXButton fx:id="btn_search" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" ripplerFill="#9be7ff" style="-fx-background-color: #64b5f6;" text="Buscar" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+            <JFXButton fx:id="btn_myPL" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" ripplerFill="#9be7ff" style="-fx-background-color: #64b5f6;" text="Tu biblioteca" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
          <BorderPane.margin>
-            <Insets left="15.0" top="15.0" />
+            <Insets left="15.0" right="15.0" top="15.0" />
          </BorderPane.margin>
-      </GridPane>
-   </left>
-   <right>
-      <GridPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="NEVER" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints valignment="CENTER" />
-            <RowConstraints />
-            <RowConstraints valignment="CENTER" />
-         </rowConstraints>
-         <children>
-            <ComboBox fx:id="combobox_profile" promptText="User">
-               <padding>
-                  <Insets left="25.0" />
-               </padding></ComboBox>
-            <ImageView fx:id="iview_profile" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <viewport>
-                  <Rectangle2D />
-               </viewport></ImageView>
+        </GridPane>
+    </left>
+    <right>
+        <GridPane alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints valignment="CENTER" />
+                <RowConstraints />
+                <RowConstraints valignment="CENTER" />
+            </rowConstraints>
+            <ComboBox fx:id="combobox_profile" promptText="User" GridPane.halignment="LEFT">
+            <padding>
+               <Insets left="25.0" />
+            </padding>
+            <GridPane.margin>
+               <Insets bottom="10.0" top="10.0" />
+            </GridPane.margin>
+            </ComboBox>
+            <ImageView fx:id="iview_profile" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT">
+                <viewport>
+                    <Rectangle2D />
+                </viewport>
+            <GridPane.margin>
+               <Insets />
+            </GridPane.margin>
+            </ImageView>
             <BorderPane GridPane.rowIndex="2">
-               <center>
-                  <Accordion maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" BorderPane.alignment="CENTER">
-                    <panes>
-                      <TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" text="Arista">
-                        <content>
-                              <BorderPane>
-                                 <top>
-                                    <ImageView fx:id="image_actual_artist" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                 </top>
-                                 <center>
-                                    <Label fx:id="name_actual_artist" BorderPane.alignment="CENTER" />
-                                 </center>
-                                 <bottom>
-                                    <Label fx:id="nationality_actual_artist" BorderPane.alignment="CENTER" />
-                                 </bottom>
-                              </BorderPane>
-                        </content>
-                      </TitledPane>
-                      <TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" expanded="false" text="Disco">
-                        <content>
-                              <BorderPane>
-                                 <top>
-                                    <ImageView fx:id="image_actual_disc" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-                                 </top>
-                                 <center>
-                                    <Label fx:id="name_actual_disc" BorderPane.alignment="CENTER" />
-                                 </center>
-                                 <bottom>
-                                    <Label fx:id="pub_actual_disc" BorderPane.alignment="CENTER" />
-                                 </bottom></BorderPane>
-                        </content>
-                      </TitledPane>
-                      <TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" expanded="false" text="Canción">
-                        <content>
-                              <BorderPane>
-                                 <top>
-                                    <Label fx:id="duration_actual_song" BorderPane.alignment="CENTER" />
-                                 </top>
-                                 <center>
-                                    <Label fx:id="nrep_actual_song" BorderPane.alignment="CENTER" />
-                                 </center>
-                                 <bottom>
-                                    <Label fx:id="genre_actual_song" BorderPane.alignment="CENTER" />
-                                 </bottom></BorderPane>
-                        </content>
-                      </TitledPane>
-                    </panes>
-                  </Accordion>
-               </center>
+                <center>
+                    <Accordion maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <panes>
+                            <TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" text="Arista">
+                                <BorderPane>
+                                    <top>
+                                        <ImageView fx:id="image_actual_artist" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                                    </top>
+                                    <center>
+                                        <Label fx:id="name_actual_artist" BorderPane.alignment="CENTER" />
+                                    </center>
+                                    <bottom>
+                                        <Label fx:id="nationality_actual_artist" BorderPane.alignment="CENTER" />
+                                    </bottom>
+                                </BorderPane>
+                            </TitledPane>
+                            <TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" expanded="false" text="Disco">
+                                <BorderPane>
+                                    <top>
+                                        <ImageView fx:id="image_actual_disc" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                                    </top>
+                                    <center>
+                                        <Label fx:id="name_actual_disc" BorderPane.alignment="CENTER" />
+                                    </center>
+                                    <bottom>
+                                        <Label fx:id="pub_actual_disc" BorderPane.alignment="CENTER" />
+                                    </bottom>
+                                </BorderPane>
+                            </TitledPane>
+                            <TitledPane alignment="CENTER" animated="false" contentDisplay="CENTER" expanded="false" text="Canción">
+                                <BorderPane>
+                                    <top>
+                                        <Label fx:id="duration_actual_song" BorderPane.alignment="CENTER" />
+                                    </top>
+                                    <center>
+                                        <Label fx:id="nrep_actual_song" BorderPane.alignment="CENTER" />
+                                    </center>
+                                    <bottom>
+                                        <Label fx:id="genre_actual_song" BorderPane.alignment="CENTER" />
+                                    </bottom>
+                                </BorderPane>
+                            </TitledPane>
+                        </panes>
+                    </Accordion>
+                </center>
             </BorderPane>
-         </children>
          <BorderPane.margin>
-            <Insets right="15.0" top="15.0" />
+            <Insets left="10.0" right="10.0" />
          </BorderPane.margin>
-      </GridPane>
-   </right>
-   <bottom>
-      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints />
-            <ColumnConstraints hgrow="NEVER" maxWidth="150.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
+        </GridPane>
+    </right>
+    <bottom>
+        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints hgrow="NEVER" maxWidth="150.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
             <ImageView fx:id="iview_album_playing" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="150.0" minHeight="-Infinity" prefHeight="50.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <JFXButton fx:id="prev_button" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="⏮" />
-                  <JFXButton fx:id="playbutton" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="⏯" GridPane.columnIndex="1" />
-                  <JFXButton fx:id="next_button" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="⏭" GridPane.columnIndex="2" />
-               </children>
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <JFXButton fx:id="btn_prev" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="⏮" />
+                <JFXButton fx:id="btn_play" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="⏯" GridPane.columnIndex="1" />
+                <JFXButton fx:id="btn_next" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="⏭" GridPane.columnIndex="2" />
             </GridPane>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.hgrow="SOMETIMES">
-               <columnConstraints>
-                  <ColumnConstraints fx:id="pane_label_song" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
-               </rowConstraints>
-               <children>
-                  <Label fx:id="lb_current_song" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" GridPane.halignment="CENTER" />
-                  <JFXSlider fx:id="slider_seek" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
-               </children>
-               <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+                    <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
+                </rowConstraints>
+                <Label id="lb_current_song" fx:id="lb_current_song" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="150.0" GridPane.halignment="CENTER" />
+                <JFXSlider fx:id="slider_seek" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="0.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
             </GridPane>
             <GridPane maxWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="52.0" minWidth="10.0" prefWidth="52.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                   <JFXButton fx:id="soundbutton" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="52.0" text="🔊" GridPane.hgrow="NEVER" />
-                   <JFXSlider fx:id="slider_volume" maxHeight="150.0" maxWidth="150.0" GridPane.columnIndex="1" />
-               </children>
+                <columnConstraints>
+                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="52.0" minWidth="10.0" prefWidth="52.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <JFXButton fx:id="btn_sound" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefWidth="52.0" text="🔊" GridPane.hgrow="NEVER" />
+                <JFXSlider fx:id="slider_volume" maxHeight="150.0" maxWidth="150.0" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </GridPane.margin>
+                  <Insets left="5.0" right="5.0" />
+               </GridPane.margin></JFXSlider>
             </GridPane>
-         </children>
          <BorderPane.margin>
-            <Insets top="15.0" />
+            <Insets />
          </BorderPane.margin>
          <padding>
-            <Insets bottom="10.0" left="5.0" right="5.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
-      </GridPane>
-   </bottom>
-   <center>
-      <TabPane fx:id="tabpane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-          <Tab fx:id="Biblioteca" text="Biblioteca">
-            <content>
-                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <center>
-                        <GridPane BorderPane.alignment="CENTER">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TableView fx:id="table_artists">
+        </GridPane>
+    </bottom>
+    <center>
+        <TabPane fx:id="tabpane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <Tab text="Biblioteca">
+                <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                    <center>
+                        <GridPane alignment="CENTER" hgap="3.0" BorderPane.alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="33.0" prefWidth="100.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <TableView fx:id="table_artists">
                                 <columns>
-                                  <TableColumn fx:id="column_artist" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Artistas" />
+                                    <TableColumn fx:id="column_artist" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Artistas" />
                                 </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <TableView fx:id="table_discs" GridPane.columnIndex="1">
+                        <columnResizePolicy>
+                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                            </TableView>
+                            <TableView fx:id="table_discs" GridPane.columnIndex="1">
                                 <columns>
-                                  <TableColumn fx:id="column_discs" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Discos" />
+                                    <TableColumn fx:id="column_discs" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Discos" />
                                 </columns>
-                                 <columnResizePolicy>
+                                <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <TableView fx:id="table_songs" GridPane.columnIndex="2">
+                                </columnResizePolicy>
+                            </TableView>
+                            <TableView fx:id="table_songs" GridPane.columnIndex="2">
                                 <columns>
-                                  <TableColumn fx:id="column_songs" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Canciones" />
+                                    <TableColumn fx:id="column_songs" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Canciones" />
                                 </columns>
-                                 <columnResizePolicy>
+                                <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                           </children>
+                                </columnResizePolicy>
+                            </TableView>
                         </GridPane>
-                     </center>
-                  </BorderPane>
-            </content>
-          </Tab>
-          <Tab fx:id="PlayList" text="PlayLists">
-            <content>
-                  <GridPane fx:id="playlist_grid">
+                    </center>
+                </BorderPane>
+            </Tab>
+            <Tab text="PlayLists">
+                <GridPane>
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="232.0" minHeight="10.0" percentHeight="60.0" prefHeight="148.99998474121094" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="98.40001525878907" minHeight="10.0" percentHeight="40.0" prefHeight="98.40001525878907" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="75.0" prefWidth="263.4" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" prefWidth="137.39999999999998" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+                        </rowConstraints>
+                        <TableView fx:id="table_playlist" GridPane.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="tc_pl_name" prefWidth="75.0" text="PlayList" />
+                                <TableColumn fx:id="tc_pl_desc" prefWidth="75.0" text="Descripción" />
+                                <TableColumn fx:id="tc_pl_creator" prefWidth="75.0" text="Creador" />
+                                <TableColumn fx:id="tc_pl_n_subs" prefWidth="75.0" text="Nº Suscriptores" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="table_pl_songs" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="tc_song_name" prefWidth="75.0" text="Canciones" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                    </GridPane>
+                    <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" GridPane.rowIndex="1">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="70.0" valignment="CENTER" vgrow="ALWAYS" />
+                            <RowConstraints maxHeight="25.6" minHeight="10.0" percentHeight="30.0" valignment="BOTTOM" vgrow="NEVER" />
+                        </rowConstraints>
+                        <TableView fx:id="table_comments" maxHeight="1.7976931348623157E308" GridPane.vgrow="SOMETIMES">
+                            <columns>
+                                <TableColumn fx:id="tc_comment_date" maxWidth="200.0" minWidth="125.0" prefWidth="-1.0" resizable="false" text="Fecha" />
+                                <TableColumn fx:id="tc_comment_user" maxWidth="100.0" minWidth="75.0" prefWidth="100.0" text="Usuario" />
+                                <TableColumn fx:id="tc_comment_comment" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Comentario" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                  <GridPane GridPane.rowIndex="1">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="232.0" minHeight="10.0" percentHeight="60.0" prefHeight="148.99998474121094" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="98.40001525878907" minHeight="10.0" percentHeight="40.0" prefHeight="98.40001525878907" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="75.0" prefWidth="263.4" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" prefWidth="137.39999999999998" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
-                          </rowConstraints>
-                           <children>
-                              <TableView fx:id="table_playlist" GridPane.vgrow="ALWAYS">
-                                <columns>
-                                  <TableColumn fx:id="tc_pl_name" prefWidth="75.0" text="PlayList" />
-                                    <TableColumn fx:id="tc_pl_desc" prefWidth="75.0" text="Descripción" />
-                                  <TableColumn fx:id="tc_pl_creator" prefWidth="75.0" text="Creador" />
-                                    <TableColumn fx:id="tc_pl_n_subs" prefWidth="75.0" text="Nº Suscriptores" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <TableView fx:id="table_pl_songs" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
-                                <columns>
-                                  <TableColumn fx:id="tc_song_name" prefWidth="75.0" text="Canciones" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                           </children>
-                        </GridPane>
-                        <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" GridPane.rowIndex="1">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="70.0" valignment="CENTER" vgrow="ALWAYS" />
-                              <RowConstraints maxHeight="25.6" minHeight="10.0" percentHeight="30.0" valignment="BOTTOM" vgrow="NEVER" />
-                           </rowConstraints>
-                           <children>
-                              <TableView fx:id="table_comments" maxHeight="1.7976931348623157E308" GridPane.vgrow="SOMETIMES">
-                                <columns>
-                                  <TableColumn fx:id="tc_comment_date" maxWidth="200.0" minWidth="125.0" prefWidth="-1.0" resizable="false" text="Fecha" />
-                                  <TableColumn fx:id="tc_comment_user" maxWidth="100.0" minWidth="75.0" prefWidth="100.0" text="Usuario" />
-                                    <TableColumn fx:id="tc_comment_comment" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Comentario" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                              <TextField fx:id="tf_comment" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </GridPane.margin></TextField>
-                              <JFXButton fx:id="send_comment" disable="true" text="Enviar" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
-                                 <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </GridPane.margin></JFXButton>
-                           </children>
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </GridPane>
+                              <TextField fx:id="tf_comment" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                              <JFXButton fx:id="btn_sendComment" buttonType="RAISED" disable="true" maxHeight="1.7976931348623157E308" ripplerFill="#82d7f2" text="▶" textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
                      </children>
+                     <padding>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                     </padding>
                   </GridPane>
-            </content>
-          </Tab>
-        </tabs>
-         <BorderPane.margin>
-            <Insets top="15.0" />
-         </BorderPane.margin>
-      </TabPane>
-   </center>
-   <top>
-      <GridPane fx:id="searchgrid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
+                    </GridPane>
+                </GridPane>
+            </Tab>
+        </TabPane>
+    </center>
+    <top>
+        <GridPane fx:id="searchgrid" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
             <TextField fx:id="tf_search" promptText="Busca aquí..." GridPane.columnIndex="1" />
             <ComboBox fx:id="cb_search" prefWidth="150.0" GridPane.columnIndex="2" />
-            <ComboBox fx:id="cb_playlists" prefWidth="150.0" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
-         </children>
+            <ComboBox fx:id="cb_playlists" prefWidth="150.0" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+            <GridPane.margin>
+               <Insets left="15.0" />
+            </GridPane.margin></ComboBox>
          <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="15.0" top="15.0" />
          </BorderPane.margin>
-      </GridPane>
-   </top>
+        </GridPane>
+    </top>
 </BorderPane>

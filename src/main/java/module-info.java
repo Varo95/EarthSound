@@ -7,7 +7,6 @@ module EarthSound {
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.base;
-    //requires mjson;
     requires org.slf4j;
     requires java.sql;
     requires com.h2database;
@@ -15,6 +14,6 @@ module EarthSound {
 
     opens com.EarthSound.controllers to javafx.fxml, javafx.controls, javafx.graphics, javafx.media, javafx.base, com.jfoenix;
     opens com.EarthSound.models.beans to jakarta.xml.bind;
-    opens com.EarthSound.utils to jakarta.xml.bind, com.sun.xml.bind, com.sun.xml.bind.core, com.jfoenix;
+    opens com.EarthSound.utils to jakarta.xml.bind, com.sun.xml.bind, com.sun.xml.bind.core;
     exports com.EarthSound;
 }

@@ -2,6 +2,7 @@ package com.EarthSound.controllers;
 
 import com.EarthSound.App;
 import com.EarthSound.models.DAO.SQL.UserDAO;
+import com.EarthSound.models.beans.DataConnection;
 import com.EarthSound.models.beans.User;
 import com.EarthSound.utils.Dialog;
 import com.EarthSound.utils.Tools;
@@ -26,10 +27,9 @@ public class LoginController {
     @FXML
     private PasswordField tfpasswd;
     @FXML
-    private JFXButton btn_registry;
-    @FXML
-    private JFXButton btn_login;
+    private JFXButton btn_registry, btn_login;
     private Tooltip toolTip;
+    private static final DataConnection dc = Tools.loadXML();
 
     @FXML
     protected void initialize() {
@@ -41,12 +41,10 @@ public class LoginController {
         toolTip.setMinWidth(50);
         //------------------------
         menu_admin.setOnAction(event -> {
-            if (event.getEventType().getName().equals("ACTION")) {
-                if (tfnick.getText().equals("root") && tfpasswd.getText().equals("toor")) {
-                    tfnick.clear();
-                    tfpasswd.clear();
-                    App.loadScene(new Stage(), "admin", "Administración", true, true);
-                }
+            if (tfnick.getText().equals(dc.getUser()) && tfpasswd.getText().equals(dc.getPassword())) {
+                tfnick.clear();
+                tfpasswd.clear();
+                App.loadScene(new Stage(), "admin", "Administración", true, true);
             }
         });
         tfnick.setOnKeyPressed(event -> {
@@ -55,12 +53,8 @@ public class LoginController {
         tfpasswd.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) onClickLogin();
         });
-        btn_login.setOnAction(event -> {
-            if (event.getEventType().getName().equals("ACTION")) onClickLogin();
-        });
-        btn_registry.setOnAction(event -> {
-            if (event.getEventType().getName().equals("ACTION")) onClickRegister();
-        });
+        btn_login.setOnAction(event -> onClickLogin());
+        btn_registry.setOnAction(event -> onClickRegister());
     }
 
     /**

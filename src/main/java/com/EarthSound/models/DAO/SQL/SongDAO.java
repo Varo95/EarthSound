@@ -53,6 +53,7 @@ public class SongDAO extends Song implements ISongDAO {
                     super.setNPlays(s.getNPlays());
                     setDisc(s.getDisc());
                 }
+                rs.close();
             }catch (SQLException e){
                 logger.error("Hubo un error en la conexión a la base de datos al instanciar el SongDAO con el id: "+id+
                         "\nCon el mensaje:\n"+e.getMessage());

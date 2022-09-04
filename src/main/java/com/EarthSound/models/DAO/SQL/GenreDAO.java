@@ -48,6 +48,7 @@ public class GenreDAO extends Genre implements IGenreDAO {
                     setId(g.getId());
                     setName(g.getName());
                 }
+                rs.close();
             } catch (SQLException e) {
                 logger.error("Hubo un error en la conexión a la base de datos al instanciar el GenreDAO con el id: "+id+
                         "\nCon el mensaje:\n"+e.getMessage());
@@ -108,6 +109,7 @@ public class GenreDAO extends Genre implements IGenreDAO {
                 Genre g = instanceBuilder(rs);
                 list.add(g);
             }
+            rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error en la conexión a la base de datos al cargar la lista de Generos:"+
                     "\nCon el mensaje:\n"+e.getMessage());

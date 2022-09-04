@@ -49,6 +49,7 @@ public class CommentDAO extends Comment implements ICommentDAO {
                     setUser(c.getUser());
                     setPlayList(null);
                 }
+                rs.close();
             }catch (SQLException e){
                 logger.error("Hubo un error en la conexión a la base de datos al instanciar el CommentDAO con el id: "+id+
                         "\nCon el mensaje:\n"+e.getMessage());

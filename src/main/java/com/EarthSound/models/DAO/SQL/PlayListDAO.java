@@ -19,16 +19,16 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
     private static final Logger logger = LoggerFactory.getLogger(PlayListDAO.class);
 
     private enum querys {
-        SELECT_ALL("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) from suscribe WHERE playlist.id=suscribe.id_playlist) as nsubs FROM playlist"),
-        SELECT_BY_ID("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) FROM suscribe WHERE id_playlist=?) as nsubs FROM playlist WHERE playlist.id=?"),
+        SELECT_ALL("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) from subscribe WHERE playlist.id=subscribe.id_playlist) as nsubs FROM playlist"),
+        SELECT_BY_ID("SELECT playlist.id as id,name,description,id_ucreator, (SELECT count(id_user) FROM subscribe WHERE id_playlist=?) as nsubs FROM playlist WHERE playlist.id=?"),
         INSERT("INSERT INTO playlist(name,description,id_ucreator) VALUES(?,?,?)"),
         UPDATE_BY_ID("UPDATE playlist SET name=?,description=?,id_ucreator=? WHERE id=?"),
         DELETE_BY_ID("DELETE FROM playlist WHERE id=?"),
 
-        GETNSUBS("SELECT COUNT(id_user) as nsub from suscribe WHERE id_playlist=?"),
+        GETNSUBS("SELECT COUNT(id_user) as nsub from subscribe WHERE id_playlist=?"),
         GETSONGS("SELECT id_song from pl_songs WHERE id_playlist=?"),
         GETCOMMENTS("SELECT id from comment WHERE id_playlist=?"),
-        GETSUBS("SELECT id_user from suscribe WHERE id_playlist=?"),
+        GETSUBS("SELECT id_user from subscribe WHERE id_playlist=?"),
 
         ADDSONGPL("INSERT INTO pl_songs(id_playlist,id_song) VALUES(?,?)"),
         DELETESONGPL("DELETE FROM pl_songs WHERE id_playlist=? AND id_song=?");
@@ -112,6 +112,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
                 while (rs.next()) {
                     result = rs.getLong("nsub");
                 }
+                rs.close();
             } catch (SQLException e) {
                 logger.error("Hubo un error al intentar replegar el numero de suscriptores de la playlist "+getName()+":\n"+e.getMessage());
             }
@@ -131,6 +132,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
                 while(rs.next()){
                     result.add(new UserDAO(rs.getLong("id_user")));
                 }
+                rs.close();
             }catch (SQLException e){
                 logger.error("Hubo un error al intentar replegar la lista de suscriptores de la playlist "+getName()+":\n"+e.getMessage());
             }
@@ -175,6 +177,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
                     result.add(c);
                 }
                 super.setComments(result);
+                rs.close();
             }
         } catch (SQLException e) {
             logger.error("Hubo un error en la conexión a la base de datos al replegar los comentarios de la playlist: "+getName()+
@@ -213,6 +216,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
                 PlayList p = instanceBuilder(rs);
                 list.add(p);
             }
+            rs.close();
         } catch (SQLException e) {
             logger.error("Hubo un error en la conexión a la base de datos al cargar la lista de PlayList:"+
                     "\nCon el mensaje:\n"+e.getMessage());

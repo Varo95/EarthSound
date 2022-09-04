@@ -40,23 +40,34 @@ public class MainController {
     @FXML
     private GridPane searchgrid;
     @FXML
-    private JFXButton searchbutton;
+    private TabPane tabpane;
     @FXML
-    private ImageView iview_profile;
+    private JFXButton btn_search, btn_play, btn_sound, btn_prev, btn_next, btn_myPL, btn_sendComment, btn_start;
     @FXML
-    private ImageView iview_album_playing;
+    private ImageView iview_profile, iview_album_playing, image_actual_artist, image_actual_disc;
     @FXML
     private ComboBox<String> combobox_profile;
     @FXML
-    private Label lb_current_song;
+    private Label lb_current_song, name_actual_artist, nationality_actual_artist, pub_actual_disc, name_actual_disc, genre_actual_song,
+            nrep_actual_song, duration_actual_song;
     @FXML
-    private JFXSlider slider_volume;
+    private JFXSlider slider_volume, slider_seek;
     @FXML
-    private JFXSlider slider_seek;
+    private TextField tf_search, tf_comment;
     @FXML
-    private JFXButton playbutton;
+    private ComboBox<String> cb_search, cb_playlists;
     @FXML
-    private JFXButton soundbutton;
+    private TableColumn<IArtist, String> column_artist;
+    @FXML
+    private TableColumn<IDisc, String> column_discs;
+    @FXML
+    private TableColumn<IPlayList, String> tc_pl_name, tc_pl_desc, tc_pl_creator;
+    @FXML
+    private TableColumn<ISong, String> column_songs, tc_song_name;
+    @FXML
+    private TableColumn<IComment, String> tc_comment_user, tc_comment_date, tc_comment_comment;
+    @FXML
+    private TableView<IPlayList> table_playlist;
     @FXML
     private TableView<IArtist> table_artists;
     @FXML
@@ -64,71 +75,11 @@ public class MainController {
     @FXML
     private TableView<ISong> table_songs;
     @FXML
-    private TableColumn<IArtist, String> column_artist;
-    @FXML
-    private TableColumn<IDisc, String> column_discs;
-    @FXML
-    private TableColumn<ISong, String> column_songs;
-    @FXML
-    private Label name_actual_artist;
-    @FXML
-    private Label nationality_actual_artist;
-    @FXML
-    private ImageView image_actual_artist;
-    @FXML
-    private Label pub_actual_disc;
-    @FXML
-    private Label name_actual_disc;
-    @FXML
-    private ImageView image_actual_disc;
-    @FXML
-    private Label genre_actual_song;
-    @FXML
-    private Label nrep_actual_song;
-    @FXML
-    private Label duration_actual_song;
-    @FXML
-    private TextField tf_search;
-    @FXML
-    private ComboBox<String> cb_search;
-    @FXML
-    private JFXButton prev_button;
-    @FXML
-    private JFXButton next_button;
-    @FXML
-    private JFXButton myplbutton;
-    @FXML
     private TableView<ISong> table_pl_songs;
-    @FXML
-    private TableColumn<ISong, String> tc_song_name;
-    @FXML
-    private TableView<IPlayList> table_playlist;
-    @FXML
-    private TableColumn<IPlayList, String> tc_pl_name;
-    @FXML
-    private TableColumn<IPlayList, String> tc_pl_desc;
-    @FXML
-    private TableColumn<IPlayList, String> tc_pl_creator;
-    @FXML
-    private TabPane tabpane;
     @FXML
     private TableView<IComment> table_comments;
     @FXML
-    private TableColumn<IComment, String> tc_comment_user;
-    @FXML
-    private TableColumn<IComment, String> tc_comment_date;
-    @FXML
-    private TableColumn<IComment, String> tc_comment_comment;
-    @FXML
-    private JFXButton send_comment;
-    @FXML
-    private TextField tf_comment;
-    @FXML
-    private JFXButton btn_inicio;
-    @FXML
     private TableColumn<IPlayList, String> tc_pl_n_subs;
-    @FXML
-    private ComboBox<String> cb_playlists;
     //Columna para boton suscribirse y desuscribirse
     private TableColumn<IPlayList, Void> colBtnSub_unSub;
 
@@ -141,14 +92,9 @@ public class MainController {
 
     //Objects and items to control the Media
     private Duration duration;
-    private boolean autonext = false;
-    private boolean atEndOfMedia = false;
+    private boolean autonext = false, atEndOfMedia = false;
     //boton repeat(??????
     private final boolean repeat = false;
-    //--------------------------------------
-    //Marquee animation
-
-    //--------------------------------------
 
     private static MediaPlayer mp_actual_song;
 
@@ -161,7 +107,7 @@ public class MainController {
         searchgrid.setVisible(false);
         searchgrid.setPrefHeight(0);
         BorderPane.setMargin(searchgrid, new Insets(0, 0, 0, 0));
-        searchbutton.setOnAction(event -> {
+        btn_search.setOnAction(event -> {
             if (event.getEventType().getName().equals("ACTION")) {
                 searchgrid.setVisible(!searchgrid.isVisible());
                 if (!searchgrid.isVisible()) {
@@ -174,7 +120,7 @@ public class MainController {
             }
         });
         //----------------
-        myplbutton.setOnAction(event -> {
+        btn_myPL.setOnAction(event -> {
             if (event.getEventType().getName().equals("ACTION")) {
                 UserPlayListController.setActual_user(actual_user);
                 App.loadScene(new Stage(), "myplaylists", "Mis PlayLists", false, true);
@@ -186,7 +132,7 @@ public class MainController {
         iview_album_playing.setImage(Tools.getImage("assets/disc_default.png", true));
         combobox_profile.setItems(FXCollections.observableArrayList(new ArrayList<>(List.of("Ver perfil", "Cerrar Sesión", "Salir"))));
         cb_search.setItems(FXCollections.observableArrayList(new ArrayList<>(List.of("Artista", "PlayList"))));
-        cb_playlists.setItems(FXCollections.observableArrayList(new ArrayList<>(List.of("Todas las Playlist", "Mis PlayLists"))));
+        cb_playlists.setItems(FXCollections.observableArrayList(new ArrayList<>(List.of("Todas las Playist", "Mis PlayLists"))));
         cb_playlists.getSelectionModel().select("Todas las PlayList");
         cb_search.getSelectionModel().select("Artista");
         combobox_profile.setPromptText(actual_user.getName());
@@ -222,7 +168,7 @@ public class MainController {
 
     private void marqueeAnimation() {
         Label label = lb_current_song;
-        //TODO code here
+
     }
 
     /**
@@ -239,7 +185,7 @@ public class MainController {
                 if (slider_volume.isValueChanging())
                     mp_actual_song.setVolume(slider_volume.getValue() / 100.0);
             });
-            soundbutton.setOnAction(event -> {
+            btn_sound.setOnAction(event -> {
                 if (event.getEventType().getName().equals("ACTION")) {
                     if (mp_actual_song != null) {
                         if (mp_actual_song.getStatus().equals(Status.PLAYING)) {
@@ -247,11 +193,11 @@ public class MainController {
                                 actual_volume = slider_volume.getValue();
                                 slider_volume.setValue(0);
                                 mp_actual_song.setVolume(0);
-                                soundbutton.setText("🔇");
+                                btn_sound.setText("🔇");
                             } else {
                                 slider_volume.setValue(actual_volume);
                                 mp_actual_song.setVolume(actual_volume);
-                                soundbutton.setText("🔊");
+                                btn_sound.setText("🔊");
                             }
                         }
                     }
@@ -267,7 +213,7 @@ public class MainController {
             //---------------------
             iview_album_playing.setImage(Tools.getImage(s.getDisc().getPhotoURL(), false));
             lb_current_song.setText(s.getName());
-            playbutton.setOnAction(e -> {
+            btn_play.setOnAction(e -> {
                 Status status = mp_actual_song.getStatus();
                 if (status == Status.UNKNOWN || status == Status.HALTED)
                     return;
@@ -287,16 +233,16 @@ public class MainController {
                 duration = mp_actual_song.getMedia().getDuration();
                 updateValues();
                 if (autonext) {
-                    playbutton.fire();
+                    btn_play.fire();
                     autonext = false;
                 }
             });
-            mp_actual_song.setOnPlaying(() -> playbutton.setText("⏸"));
-            mp_actual_song.setOnPaused(() -> playbutton.setText("▶"));
+            mp_actual_song.setOnPlaying(() -> btn_play.setText("⏸"));
+            mp_actual_song.setOnPaused(() -> btn_play.setText("▶"));
             mp_actual_song.setCycleCount(repeat ? MediaPlayer.INDEFINITE : 1);
             mp_actual_song.setOnEndOfMedia(() -> {
                 if (!repeat) {
-                    playbutton.setText("▶");
+                    btn_play.setText("▶");
                     atEndOfMedia = true;
                 }
                 SongDAO count = new SongDAO(s.getId());
@@ -304,7 +250,7 @@ public class MainController {
                 mp_actual_song.seek(mp_actual_song.getStartTime());
                 slider_seek.setValue(0);
                 autonext = true;
-                next_button.fire();
+                btn_next.fire();
             });
         }
     }
@@ -356,9 +302,9 @@ public class MainController {
                 table_pl_songs.setItems(null);
                 table_pl_songs.setItems(FXCollections.observableArrayList(d.getPlayList()));
                 table_comments.setItems(null);
-                send_comment.setDisable(true);
+                btn_sendComment.setDisable(true);
                 table_comments.setItems(FXCollections.observableArrayList(d.getComments()));
-                send_comment.setDisable(false);
+                btn_sendComment.setDisable(false);
             }
         });
         table_pl_songs.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -462,21 +408,21 @@ public class MainController {
                     table_pl_songs.setItems(null);
                     table_playlist.refresh();
                     Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré tus playlists", "¡Encontrarás las que estás suscrito y las que has creado!");
-                } else if (newValue.equals("Todas las Playlist")) {
+                } else if (newValue.equals("Todas las PlayList")) {
                     table_playlist.setItems(null);
                     table_playlist.setItems(FXCollections.observableArrayList(PlayListDAO.listAll()));
                     table_comments.setItems(null);
                     table_pl_songs.setItems(null);
                     table_playlist.refresh();
-                    Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré TODAS las playlists", "¡Disfruta de la música de otros usuarios!");
+                    Dialog.showInformation("Pestaña PlayList actualizada", "Ahora te mostraré todas las playlists", "¡Puedes suscribirte a las que te gusten!");
                 }
             }
         });
-        btn_inicio.setOnAction(event -> Tools.unKnow());
+        btn_start.setOnAction(event -> Tools.unKnow());
         table_playlist.refresh();
         table_artists.refresh();
         //Configure Send Button and TextField to put comments while enter or send is pressed
-        send_comment.setOnAction(event -> onClickSendComment());
+        btn_sendComment.setOnAction(event -> onClickSendComment());
         tf_comment.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) onClickSendComment();
         });
@@ -484,7 +430,7 @@ public class MainController {
     }
 
     /**
-     * This method is used to create suscribe and unsuscribe buttons on the tableview of playlists
+     * This method is used to create subscribe and unsubscribe buttons on the tableview of playlists
      */
     private void configureSubAndUnsubButtonsColumn() {
         colBtnSub_unSub = new TableColumn<>("Sub/UnSub");
@@ -594,7 +540,7 @@ public class MainController {
      * This method is used to configure next and prev buttons
      */
     private void configurePrevAndNext() {
-        prev_button.setOnAction(event -> {
+        btn_prev.setOnAction(event -> {
             stopSong();
             if (tabpane.getSelectionModel().isSelected(0)) {
                 if (table_songs.getItems() != null && table_songs.getSelectionModel().getSelectedItem() != null) {
@@ -615,7 +561,7 @@ public class MainController {
             }
 
         });
-        next_button.setOnAction(event -> {
+        btn_next.setOnAction(event -> {
             stopSong();
             if (tabpane.getSelectionModel().isSelected(0)) {
                 if (table_songs.getItems() != null && table_songs.getSelectionModel().getSelectedItem() != null) {

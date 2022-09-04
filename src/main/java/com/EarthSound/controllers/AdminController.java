@@ -28,216 +28,75 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class AdminController {
     //C------------------Pestaña CREAR----------------------C
+    @FXML
+    private ImageView image_c_artist, image_c_disc;
+    @FXML
+    private TextField tf_c_artist_name, tf_c_artist_nationality, tf_c_artist_photoURL, tf_c_disc_name, tf_c_disc_photoURL,
+            tf_c_song_duration, tf_c_song_name, tf_c_song_songURL, tf_c_genre_name;
+    @FXML
+    private JFXButton btn_c_artist_examine, btn_c_artist_save, btn_c_disc_examine, btn_c_disc_save, btn_c_song_examine,
+            btn_c_song_save, btn_c_song_play, btn_c_genre_save;
 
-    //>>>C---------------Pestaña Artista---------------------
-    @FXML
-    private ImageView image_c_artist;
-    @FXML
-    private TextField tf_c_artist_name;
-    @FXML
-    private TextField tf_c_artist_nationality;
-    @FXML
-    private TextField tf_c_artist_photoURL;
-    @FXML
-    private JFXButton btn_c_artist_examine;
-    @FXML
-    private JFXButton btn_c_artist_save;
-
-    //>>>C---------------Pestaña Disco-----------------------
-    @FXML
-    private ImageView image_c_disc;
-    @FXML
-    private TextField tf_c_disc_name;
     @FXML
     private DatePicker dp_c_disc_pubdate;
     @FXML
-    private TextField tf_c_disc_photoURL;
-    @FXML
-    private JFXButton btn_c_disc_examine;
-    @FXML
-    private ComboBox<IArtist> cb_c_disc_sl_artist;
-    @FXML
-    private JFXButton btn_c_disc_save;
-
-    //>>>C---------------Pestaña Cancion---------------------
-    @FXML
-    private ComboBox<IArtist> cb_c_song_sl_artist;
+    private ComboBox<IArtist> cb_c_disc_sl_artist, cb_c_song_sl_artist;
     @FXML
     private ComboBox<IDisc> cb_c_song_sl_disc;
     @FXML
     private ComboBox<IGenre> cb_c_song_sl_genre;
-    @FXML
-    private TextField tf_c_song_duration;
-    @FXML
-    private TextField tf_c_song_name;
-    @FXML
-    private TextField tf_c_song_songURL;
-    @FXML
-    private JFXButton btn_c_song_examine;
-    @FXML
-    private JFXButton btn_c_song_save;
-    @FXML
-    private JFXButton btn_c_song_play;
 
-    //>>>C---------------Pestaña Género----------------------
-    @FXML
-    private TextField tf_c_genre_name;
-    @FXML
-    private JFXButton btn_c_genre_save;
 
     //U------------------Pestaña ACTUALIZAR-----------------U
-
-    //>>>U---------------Pestaña Artista---------------------
     @FXML
-    private ComboBox<IArtist> cb_u_artist_sl_artist;
+    private ComboBox<IArtist> cb_u_artist_sl_artist, cb_u_disc_sl_artist, cb_u_disc_sl_artist_in, cb_u_song_sl_artist, cb_u_song_sl_artist_in;
     @FXML
-    private ImageView image_u_artist;
+    private ImageView image_u_artist, image_u_disc;
     @FXML
-    private TextField tf_u_artist_name;
+    private TextField tf_u_artist_name, tf_u_artist_nationality, tf_u_artist_photoURL, tf_u_disc_name, tf_u_disc_photoURL,
+            tf_u_song_duration, tf_u_song_name, tf_u_song_songURL, tf_u_genre_name;
     @FXML
-    private TextField tf_u_artist_nationality;
+    private JFXButton btn_u_artist_examine, btn_u_artist_update, btn_u_disc_examine, btn_u_disc_update, btn_u_song_examine,
+            btn_u_song_update, btn_u_song_play, btn_u_genre_update;
     @FXML
-    private TextField tf_u_artist_photoURL;
-    @FXML
-    private JFXButton btn_u_artist_examine;
-    @FXML
-    private JFXButton btn_u_artist_update;
-
-    //>>>U---------------Pestaña Disco-----------------------
-    @FXML
-    private ComboBox<IArtist> cb_u_disc_sl_artist;
-    @FXML
-    private ComboBox<IArtist> cb_u_disc_sl_artist_in;
-    @FXML
-    private ComboBox<IDisc> cb_u_disc_sl_disc;
-    @FXML
-    private ImageView image_u_disc;
-    @FXML
-    private TextField tf_u_disc_name;
-    @FXML
-    private TextField tf_u_disc_photoURL;
+    private ComboBox<IDisc> cb_u_disc_sl_disc, cb_u_song_sl_disc, cb_u_song_sl_disc_in;
     @FXML
     private DatePicker dp_u_disc_pubdate;
     @FXML
-    private JFXButton btn_u_disc_examine;
-    @FXML
-    private JFXButton btn_u_disc_update;
-
-    //>>>U---------------Pestaña Cancion---------------------
-    @FXML
-    private ComboBox<IArtist> cb_u_song_sl_artist;
-    @FXML
-    private ComboBox<IArtist> cb_u_song_sl_artist_in;
-    @FXML
-    private ComboBox<IDisc> cb_u_song_sl_disc;
-    @FXML
-    private ComboBox<IDisc> cb_u_song_sl_disc_in;
-    @FXML
-    private ComboBox<IGenre> cb_u_song_sl_genre;
+    private ComboBox<IGenre> cb_u_song_sl_genre, cb_u_genre_sl_genre;
     @FXML
     private ComboBox<ISong> cb_u_song_sl_song;
-    @FXML
-    private TextField tf_u_song_duration;
-    @FXML
-    private TextField tf_u_song_name;
-    @FXML
-    private TextField tf_u_song_songURL;
-    @FXML
-    private JFXButton btn_u_song_examine;
-    @FXML
-    private JFXButton btn_u_song_update;
-    @FXML
-    private JFXButton btn_u_song_play;
-
-    //>>>U---------------Pestaña Género----------------------
-    @FXML
-    private JFXButton btn_u_genre_update;
-    @FXML
-    private ComboBox<IGenre> cb_u_genre_sl_genre;
-    @FXML
-    private TextField tf_u_genre_name;
 
     //D------------------Pestaña ELIMINAR-------------------D
-
-    //>>>D---------------Pestaña Artista---------------------
     @FXML
-    private ComboBox<IArtist> cb_r_artist_sl_artist;
+    private ComboBox<IArtist> cb_r_artist_sl_artist, cb_r_disc_sl_artist, cb_r_song_sl_artist;
     @FXML
-    private TextField tf_r_artist_name;
+    private TextField tf_r_artist_name, tf_r_artist_nationality, tf_r_artist_photoURL, tf_r_disc_name, tf_r_disc_photoURL,
+            tf_r_song_duration, tf_r_song_name, tf_r_song_songURL, tf_r_genre_name;
     @FXML
-    private TextField tf_r_artist_nationality;
+    private ImageView image_r_artist, image_r_disc;
     @FXML
-    private TextField tf_r_artist_photoURL;
+    private JFXButton btn_r_artist_examine, btn_r_artist_remove, btn_r_disc_examine, btn_r_disc_remove, btn_r_song_examine,
+            btn_r_song_remove, btn_r_song_play, btn_r_genre_remove;
     @FXML
-    private ImageView image_r_artist;
-    @FXML
-    private JFXButton btn_r_artist_examine;
-    @FXML
-    private JFXButton btn_r_artist_remove;
-    //>>>D---------------Pestaña Disco-----------------------
-    @FXML
-    private ComboBox<IArtist> cb_r_disc_sl_artist;
-    @FXML
-    private ComboBox<IDisc> cb_r_disc_sl_disc;
-    @FXML
-    private ImageView image_r_disc;
+    private ComboBox<IDisc> cb_r_disc_sl_disc, cb_r_song_sl_disc, cb_r_song_sl_disc_in;
     @FXML
     private DatePicker dp_r_disc_pubdate;
     @FXML
-    private TextField tf_r_disc_name;
-    @FXML
-    private TextField tf_r_disc_photoURL;
-    @FXML
-    private JFXButton btn_r_disc_examine;
-    @FXML
-    private JFXButton btn_r_disc_remove;
-
-    //>>>D---------------Pestaña Cancion---------------------
-    @FXML
-    private ComboBox<IArtist> cb_r_song_sl_artist;
-    @FXML
-    private ComboBox<IDisc> cb_r_song_sl_disc;
-    @FXML
-    private ComboBox<IDisc> cb_r_song_sl_disc_in;
-    @FXML
     private ComboBox<ISong> cb_r_song_sl_song;
     @FXML
-    private ComboBox<IGenre> cb_r_song_sl_genre;
-    @FXML
-    private TextField tf_r_song_duration;
-    @FXML
-    private TextField tf_r_song_name;
-    @FXML
-    private TextField tf_r_song_songURL;
-    @FXML
-    private JFXButton btn_r_song_examine;
-    @FXML
-    private JFXButton btn_r_song_remove;
-    @FXML
-    private JFXButton btn_r_song_play;
-
-    //>>>D---------------Pestaña Género----------------------
-    @FXML
-    private ComboBox<IGenre> cb_r_genre_sl_genre;
-    @FXML
-    private TextField tf_r_genre_name;
-    @FXML
-    private JFXButton btn_r_genre_remove;
+    private ComboBox<IGenre> cb_r_song_sl_genre, cb_r_genre_sl_genre;
 
     //------------------------------------------------------------------------
-    private static ArtistDAO selected_artist_update;
-    private static DiscDAO selected_disc_update;
-    private static SongDAO selected_song_update;
-    private static GenreDAO selected_genre_update;
-    private static ArtistDAO selected_artist_remove;
-    private static DiscDAO selected_disc_remove;
-    private static SongDAO selected_song_remove;
-    private static GenreDAO selected_genre_remove;
+    private static ArtistDAO selected_artist_update, selected_artist_remove;
+    private static DiscDAO selected_disc_update, selected_disc_remove;
+    private static SongDAO selected_song_update, selected_song_remove;
+    private static GenreDAO selected_genre_update, selected_genre_remove;
     //------------------------------ComboBoxLists------------------------------
-    List<ComboBox<IArtist>> artist_comboboxes;
-    List<ComboBox<IDisc>> disc_comboboxes;
-    List<ComboBox<ISong>> song_comboboxes;
-    List<ComboBox<IGenre>> genre_comboboxes;
+    private List<ComboBox<IArtist>> artist_comboboxes;
+    private List<ComboBox<IDisc>> disc_comboboxes;
+    private List<ComboBox<ISong>> song_comboboxes;
+    private List<ComboBox<IGenre>> genre_comboboxes;
 
     @FXML
     protected void initialize() {

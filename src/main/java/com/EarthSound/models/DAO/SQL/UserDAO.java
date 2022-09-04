@@ -19,21 +19,21 @@ public class UserDAO extends User implements IUserDAO {
     private static final Logger logger = LoggerFactory.getLogger(UserDAO.class);
 
     private enum querys {
-        SELECT_ALL("SELECT id,name,passwd,photoURL,disabled FROM user"),
-        SELECT_BY_ID("SELECT id,name,passwd,photoURL,disabled FROM user WHERE id=?"),
-        SELECT_BY_NAME("SELECT id,passwd,photoURL,disabled FROM user WHERE name=?"),
-        INSERT("INSERT INTO user(name,passwd,photoURL,disabled) VALUES(?,?,?,?)"),
-        UPDATE_BY_ID("UPDATE user SET name=?,passwd=?,photoURL=?,disabled=? WHERE id=?"),
-        DELETE_BY_ID("DELETE FROM artist WHERE id=?"),
-        DISABLE_USER_BYID("UPDATE user SET disabled=? WHERE id=?"),
+        SELECT_ALL("SELECT id,name,passwd,photoURL,disabled FROM _user"),
+        SELECT_BY_ID("SELECT id,name,passwd,photoURL,disabled FROM _user WHERE id=?"),
+        SELECT_BY_NAME("SELECT id,passwd,photoURL,disabled FROM _user WHERE name=?"),
+        INSERT("INSERT INTO _user(name,passwd,photoURL,disabled) VALUES(?,?,?,?)"),
+        UPDATE_BY_ID("UPDATE _user SET name=?,passwd=?,photoURL=?,disabled=? WHERE id=?"),
+        DELETE_BY_ID("DELETE FROM _user WHERE id=?"),
+        DISABLE_USER_BYID("UPDATE _user SET disabled=? WHERE id=?"),
 
-        GETPASSWORD_BY_ID("SELECT passwd FROM user WHERE id=?"),
-        GETPASSWORD_BY_NAME("SELECT id,passwd FROM user WHERE name LIKE ?"),
-        SUSCRIBE("INSERT INTO suscribe(id_user, id_playlist) VALUES(?,?)"),
-        UNSUSCRIBE("DELETE FROM suscribe WHERE id_playlist=? AND id_user=?"),
+        GETPASSWORD_BY_ID("SELECT passwd FROM _user WHERE id=?"),
+        GETPASSWORD_BY_NAME("SELECT id,passwd FROM _user WHERE name LIKE ?"),
+        SUBSCRIBE("INSERT INTO subscribe(id_user, id_playlist) VALUES(?,?)"),
+        UNSUBSCRIBE("DELETE FROM subscribe WHERE id_playlist=? AND id_user=?"),
 
         GETMYPL("SELECT id,name,description FROM playlist WHERE id_ucreator=? "),
-        GETSUBSPL("SELECT playlist.id as id,name,description,id_ucreator FROM playlist, suscribe WHERE suscribe.id_playlist=playlist.id AND suscribe.id_user=?");
+        GETSUBSPL("SELECT playlist.id as id,name,description,id_ucreator FROM playlist, subscribe WHERE subscribe.id_playlist=playlist.id AND subscribe.id_user=?");
         private String q;
 
         querys(String q) {
@@ -65,6 +65,7 @@ public class UserDAO extends User implements IUserDAO {
                     setDisabled(u.isDisabled());
                     setSubPL(null);
                 }
+                rs.close();
             } catch (SQLException e) {
                 logger.error("Hubo un error en la conexión a la base de datos al instanciar el UserDAO con el id: "+id+
                         "\nCon el mensaje:\n"+e.getMessage());
@@ -151,7 +152,7 @@ public class UserDAO extends User implements IUserDAO {
         List<Object> params = new ArrayList<>();
         params.add(getId());
         params.add(pl.getId());
-        long id = SQL.execUpdate(querys.SUSCRIBE.getQ(),params,true);
+        long id = SQL.execUpdate(querys.SUBSCRIBE.getQ(),params,true);
         return id != -1;
     }
 
@@ -160,7 +161,7 @@ public class UserDAO extends User implements IUserDAO {
         List<Object> params = new ArrayList<>();
         params.add(pl.getId());
         params.add(getId());
-        long id = SQL.execUpdate(querys.UNSUSCRIBE.getQ(), params, false);
+        long id = SQL.execUpdate(querys.UNSUBSCRIBE.getQ(), params, false);
         return id != -1;
     }
 

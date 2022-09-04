@@ -24,45 +24,27 @@ import java.util.List;
 public class UserPlayListController {
     @FXML
     private JFXButton bnt_insert;
-
     @FXML
     private ComboBox<IArtist> cb_artist;
-
     @FXML
     private ComboBox<IDisc> cb_disc;
-
     @FXML
     private ComboBox<IPlayList> cb_playlist;
-
     @FXML
     private ComboBox<ISong> cb_song;
-
     @FXML
     private TableView<IPlayList> table_playlist;
-
     @FXML
     private TableView<ISong> table_songs;
-
     @FXML
-    private TableColumn<IPlayList, String> tc_pl_name;
-
+    private TableColumn<IPlayList, String> tc_pl_name, tc_description;
     @FXML
-    private TableColumn<ISong, String> tc_song_artist;
-
-    @FXML
-    private TableColumn<ISong, String> tc_song_disc;
-
-    @FXML
-    private TableColumn<ISong, String> tc_song_name;
-
-    @FXML
-    private TableColumn<IPlayList, String> tc_description;
-
+    private TableColumn<ISong, String> tc_song_artist, tc_song_disc, tc_song_name;
     @FXML
     private MenuItem add_pl;
 
     private static User actual_user;
-    private List<IPlayList> user_playlist;
+    private final List<IPlayList> user_playlist = new ArrayList<>();
 
     @FXML
     protected void initialize() {
@@ -102,7 +84,7 @@ public class UserPlayListController {
     }
 
     private void updateTables() {
-        user_playlist = new ArrayList<>();
+        user_playlist.clear();
         for (int i = 0; i < actual_user.getSubPL().size(); i++) {
             if (actual_user.getSubPL().get(i).getCreator().getId() == actual_user.getId()) {
                 user_playlist.add(actual_user.getSubPL().get(i));

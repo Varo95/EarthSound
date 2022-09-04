@@ -25,13 +25,7 @@ public class ProfileController {
     @FXML
     private PasswordField tfpasswd;
     @FXML
-    private JFXButton btn_save;
-    @FXML
-    private JFXButton lock;
-    @FXML
-    private JFXButton btn_photo;
-    @FXML
-    private JFXButton btnpwd;
+    private JFXButton btn_save, lock, btn_photo, btnpwd;
     private static final String default_photo = "assets/user_default.png";
     private static String photo = "";
     private static User actual_user;
