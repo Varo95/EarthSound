@@ -118,6 +118,7 @@ public class UserDAO extends User implements IUserDAO {
                     pl.setCreator(this);
                     result.add(pl);
                 }
+                rs.close();
             }
             ResultSet rs1 = SQL.execQuery(querys.GETSUBSPL.getQ(), params);
             if (rs1 != null) {
@@ -127,6 +128,7 @@ public class UserDAO extends User implements IUserDAO {
                     pl.setCreator(new UserDAO(rs1.getLong("id_ucreator")));
                     result.add(pl);
                 }
+                rs1.close();
             }
             super.setSubPL(result);
         } catch (SQLException e) {
@@ -201,6 +203,7 @@ public class UserDAO extends User implements IUserDAO {
                     while (rs.next()) {
                         encryptedDBPwd = rs.getString("passwd");
                     }
+                    rs.close();
                 }
             }catch (SQLException e){
                 logger.error("Hubo un error al intentar recuperar la contraseña del usuario por el id. Con el mensaje:\n"+e.getMessage());
@@ -214,6 +217,7 @@ public class UserDAO extends User implements IUserDAO {
                         encryptedDBPwd = rs.getString("passwd");
                         userToCheck.setId(rs.getLong("id"));
                     }
+                    rs.close();
                 }
             }catch (SQLException e){
                 logger.error("Hubo un error al intentar recuperar la contraseña del usuario con el nombre. Con el mensaje:\n"+e.getMessage());

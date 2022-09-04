@@ -64,6 +64,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
                     setSubs(null);
                     setComments(null);
                 }
+                rs.close();
             } catch (SQLException e) {
                 logger.error("Hubo un problema con la conexión en la base de datos a la hora de instanciar la playlist" +
                         "con el id: "+id+"\n con el mensaje:\n "+e.getMessage());
@@ -154,6 +155,7 @@ public class PlayListDAO extends PlayList implements IPlayListDAO {
                     result.add(s);
                 }
                 super.setPlayList(result);
+                rs.close();
             }
         } catch (SQLException e) {
             logger.error("Hubo un error en la conexión a la base de datos al replegar las canciones de la playlist:"+getName()+

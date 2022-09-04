@@ -8,45 +8,42 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.EarthSound.controllers.ProfileController">
    <top>
-      <GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-         <columnConstraints>
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" valignment="CENTER" vgrow="ALWAYS" />
-         </rowConstraints>
-         <children>
-            <ImageView fx:id="iview_profile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-            <JFXButton fx:id="lock" mnemonicParsing="false" text="🔒" GridPane.columnIndex="2" />
-            <JFXButton fx:id="btn_photo" mnemonicParsing="false" text="Cambiar Foto" />
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </GridPane>
+       <GridPane hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+           <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+           </padding>
+           <columnConstraints>
+               <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+               <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+               <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" valignment="CENTER" vgrow="ALWAYS"/>
+           </rowConstraints>
+           <ImageView fx:id="iview_profile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"
+                      GridPane.columnIndex="1"/>
+           <JFXButton fx:id="lock" mnemonicParsing="false" text="🔒" GridPane.columnIndex="2"/>
+           <JFXButton fx:id="btn_photo" mnemonicParsing="false" text="Cambiar Foto"/>
+       </GridPane>
    </top>
    <center>
-      <GridPane vgap="10.0" BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="ALWAYS" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
-        </rowConstraints>
-          <children>
-              <TextField fx:id="tfnick" prefWidth="200.0" promptText="Nickname" />
-              <PasswordField fx:id="tfpasswd" prefWidth="200.0" promptText="Contraseña" GridPane.rowIndex="1" />
-              <JFXButton fx:id="btnpwd" mnemonicParsing="false" onAction="#viewPwd" text="👁" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-              <JFXButton fx:id="btn_save" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Guardar" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-          </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </GridPane>
+       <GridPane vgap="10.0" BorderPane.alignment="CENTER">
+           <columnConstraints>
+               <ColumnConstraints hgrow="ALWAYS"/>
+           </columnConstraints>
+           <rowConstraints>
+               <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES"/>
+               <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES"/>
+               <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES"/>
+           </rowConstraints>
+           <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+           </padding>
+           <TextField fx:id="tfnick" prefWidth="200.0" promptText="Nickname"/>
+           <PasswordField fx:id="tfpasswd" prefWidth="200.0" promptText="Contraseña" GridPane.rowIndex="1"/>
+           <JFXButton fx:id="btnpwd" mnemonicParsing="false" onAction="#viewPwd" text="👁" GridPane.columnIndex="0" GridPane.halignment="RIGHT" GridPane.rowIndex="1"/>
+           <JFXButton fx:id="btn_save" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Guardar" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+       </GridPane>
    </center>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
