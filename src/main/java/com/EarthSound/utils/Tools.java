@@ -1,13 +1,13 @@
 package com.EarthSound.utils;
 
 import com.EarthSound.App;
-import com.EarthSound.interfaces.IBeans.IPlayList;
 import com.EarthSound.interfaces.IBeans.IDisc;
-import com.EarthSound.interfaces.IBeans.ISong;
 import com.EarthSound.interfaces.IBeans.IArtist;
 import com.EarthSound.interfaces.IBeans.IGenre;
-import com.EarthSound.models.DAO.SQL.*;
-import com.EarthSound.models.beans.*;
+import com.EarthSound.interfaces.IBeans.ISong;
+import com.EarthSound.models.DAO.SQL.ArtistDAO;
+import com.EarthSound.models.DAO.SQL.GenreDAO;
+import com.EarthSound.models.beans.DataConnection;
 import com.jfoenix.controls.JFXButton;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -15,23 +15,29 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import javafx.collections.FXCollections;
 import javafx.geometry.Point2D;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -39,7 +45,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
@@ -61,19 +66,19 @@ public class Tools {
      * @param url url to check
      * @return true if ends with jpg, gif, or png, otherwhise, false
      */
-    public static boolean Validate_img_URL(String url) {
+    public static boolean Validate_img_URL(final String url) {
         return Pattern.compile(URL_IMG_EXPRESSION).matcher(url).matches();
     }
 
-    public static boolean Validate_song_URL(String url) {
+    public static boolean Validate_song_URL(final String url) {
         return Pattern.compile(URL_SONG_EXPRESSION).matcher(url).matches();
     }
 
-    public static boolean Validate_Double_Value(String value) {
+    public static boolean Validate_Double_Value(final String value) {
         return Pattern.compile(DOUBLE_EXPRESSION_TF).matcher(value).matches();
     }
 
-    public static boolean ValidateFile_img(String url) {
+    public static boolean ValidateFile_img(final String url) {
         boolean result = switch (url.toLowerCase().substring(url.length() - 4, url.length())) {
             case ".bmp", ".gif", ".jpg", ".png" -> true;
             default -> false;
@@ -86,7 +91,7 @@ public class Tools {
         return result;
     }
 
-    public static boolean ValidateFile_song(String url) {
+    public static boolean ValidateFile_song(final String url) {
         boolean result = switch (url.toLowerCase().substring(url.length() - 4, url.length())) {
             case ".mp3", ".aif", ".wav" -> true;
             default -> false;
@@ -106,12 +111,12 @@ public class Tools {
      * @param isResPath indicate if the source is on resPath(jar) or not
      * @return the MediaPlayer with the sound loaded
      */
-    public static MediaPlayer getSound(String resPath, boolean isResPath) {
+    public static MediaPlayer getSound(final String resPath, final boolean isResPath) {
         if (isResPath)
             return new MediaPlayer(new Media(Objects.requireNonNull(App.class.getResource(resPath)).toExternalForm()));
         else {
             if (!Validate_song_URL(resPath)) {
-                File f = new File(resPath);
+                final File f = new File(resPath);
                 if (f.exists() && f.isFile())
                     if (ValidateFile_song(f.getName()))
                         return new MediaPlayer(new Media(f.toURI().toString()));
@@ -129,12 +134,12 @@ public class Tools {
      * @param isResPath indicate if the source is on resPath(jar) or not
      * @return the Image from the resources loaded
      */
-    public static Image getImage(String resPath, boolean isResPath) {
+    public static Image getImage(final String resPath, final boolean isResPath) {
         if (isResPath)
             return new Image(Objects.requireNonNull(App.class.getResourceAsStream(resPath)));
         else {
             if (!Validate_img_URL(resPath)) {
-                File f = new File(resPath);
+                final File f = new File(resPath);
                 if (f.exists() && f.isFile())
                     if (ValidateFile_img(f.getName()))
                         try{
@@ -158,17 +163,17 @@ public class Tools {
      */
     public static DataConnection loadXML() {
         DataConnection result;
-        try (BufferedReader r = new BufferedReader(new FileReader("Connection.xml"))) {
-            JAXBContext jaxbC = JAXBContext.newInstance(DataConnection.class);
-            Unmarshaller um = jaxbC.createUnmarshaller();
+        try (final BufferedReader r = new BufferedReader(new FileReader("Connection.xml"))) {
+            final JAXBContext jaxbC = JAXBContext.newInstance(DataConnection.class);
+            final Unmarshaller um = jaxbC.createUnmarshaller();
             result = (DataConnection) um.unmarshal(r);
-        } catch (IOException | JAXBException e) {
+        } catch (final IOException | JAXBException e) {
             Dialog.showWarning("Error", "Hubo un error al cargar el XML", "Se intentará crear un nuevo fichero en esa ruta");
             result = new DataConnection("", "spotify", "root", "toor", "H2");
             if (e.getClass().equals(IOException.class))
-                logger.error("No se ha encontrado la ruta del fichero XML: " + e.getMessage());
+                logger.error("No se ha encontrado la ruta del fichero XML: {}", e.getMessage());
             else if (e.getClass().equals(JAXBException.class))
-                logger.error("Hubo un error en la lectura del XML: " + e.getMessage());
+                logger.error("Hubo un error en la lectura del XML: {}", e.getMessage());
             else
                 logger.error("Hubo un error desconocido: " + e.getMessage());
             saveXML(result);
@@ -182,18 +187,18 @@ public class Tools {
      *
      * @param dc DataConnection to save
      */
-    private static void saveXML(DataConnection dc) {
-        try (BufferedWriter w = new BufferedWriter(new FileWriter("Connection.xml"))) {
-            JAXBContext jaxbC = JAXBContext.newInstance(DataConnection.class);
-            Marshaller m = jaxbC.createMarshaller();
-            m.setProperty(m.JAXB_FORMATTED_OUTPUT, true);
+    private static void saveXML(final DataConnection dc) {
+        try (final BufferedWriter w = new BufferedWriter(new FileWriter("Connection.xml"))) {
+            final JAXBContext jaxbC = JAXBContext.newInstance(DataConnection.class);
+            final Marshaller m = jaxbC.createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             m.marshal(dc, w);
-        } catch (IOException | JAXBException e) {
+        } catch (final IOException | JAXBException e) {
             Dialog.showError("Error", "Hubo un error al guardar el XML", e.getMessage());
             if (e.getClass().equals(IOException.class))
-                logger.error("No se ha encontrado el fichero XML: " + e.getMessage());
+                logger.error("No se ha encontrado el fichero XML: {}", e.getMessage());
             else if (e.getClass().equals(JAXBException.class))
-                logger.error("Hubo un error en la escritura del XML: " + e.getMessage());
+                logger.error("Hubo un error en la escritura del XML: {}", e.getMessage());
             else
                 logger.error("Hubo un error desconocido: " + e.getMessage());
         }
@@ -206,20 +211,16 @@ public class Tools {
      * @param duration total time of the sound
      * @return formatted string
      */
-    public static String formatTime(Duration elapsed, Duration duration) {
-        int intElapsed = (int) Math.floor(elapsed.toSeconds());
-        int elapsedHours = intElapsed / (60 * 60);
-        if (elapsedHours > 0)
-            intElapsed -= elapsedHours * 60 * 60;
-        int elapsedMinutes = intElapsed / 60;
-        int elapsedSeconds = intElapsed - elapsedHours * 60 * 60 - elapsedMinutes * 60;
+    public static String formatTime(final Duration elapsed, final Duration duration) {
+        final int[] elapsedDuration = getDuration(elapsed);
+        int elapsedHours = elapsedDuration[0];
+        int elapsedMinutes = elapsedDuration[1];
+        int elapsedSeconds = elapsedDuration[2];
         if (duration.greaterThan(Duration.ZERO)) {
-            int intDuration = (int) Math.floor(duration.toSeconds());
-            int durationHours = intDuration / (60 * 60);
-            if (durationHours > 0)
-                intDuration -= durationHours * 60 * 60;
-            int durationMinutes = intDuration / 60;
-            int durationSeconds = intDuration - durationHours * 60 * 60 - durationMinutes * 60;
+            final int[] durationDuration = getDuration(duration);
+            int durationHours = durationDuration[0];
+            int durationMinutes = durationDuration[1];
+            int durationSeconds = durationDuration[2];
             if (durationHours > 0)
                 return String.format("%d:%02d:%02d/%d:%02d:%02d", elapsedHours, elapsedMinutes, elapsedSeconds, durationHours, durationMinutes, durationSeconds);
             else
@@ -233,22 +234,42 @@ public class Tools {
     }
 
     /**
+     * This method is used to get the duration on int[] format
+     * First return will be hours, second minutes and third seconds
+     * @param duration duration to get
+     * @return int[] with the duration
+     */
+    private static int[] getDuration(final Duration duration){
+        int intDuration = (int) Math.floor(duration.toSeconds());
+        //Calculate the hours based on duration
+        final int durationHours = intDuration / (60 * 60);
+        //If there are hours, we remove them from the duration
+        if (durationHours > 0)
+            intDuration -= durationHours * 60 * 60;
+        //Calculate the minutes based on duration
+        final int durationMinutes = intDuration / 60;
+        //If there are minutes, we remove them from the duration
+        final int durationSeconds = intDuration - durationHours * 60 * 60 - durationMinutes * 60;
+        return new int[]{durationHours, durationMinutes, durationSeconds};
+    }
+
+    /**
      * This method is used to encrypt Strings with MD5 hash
      *
      * @param s String that needs to hash
      * @return hashed MD5 string
      */
-    public static String encryptMD5(String s) {
+    public static String encryptMD5(final String s) {
         String result = null;
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            final MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(s.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte aByte : md.digest()) {
+            final StringBuilder sb = new StringBuilder();
+            for (final byte aByte : md.digest()) {
                 sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             result = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (final NoSuchAlgorithmException e) {
             logger.error("no Provider supports a MessageDigestSpi implementation for the specified algorithm" + e.getMessage());
         }
         return result;
@@ -261,17 +282,17 @@ public class Tools {
      * @param target target file out
      * @return true if success
      */
-    public static boolean FileCopy(String source, String target) {
+    public static boolean FileCopy(final String source, final String target) {
         boolean result;
         try {
-            File f = new File(target);
+            final File f = new File(target);
             if (!Files.exists(f.toPath())) {
                 Files.createDirectories(f.toPath());
             }
             Files.copy(Paths.get(source), Paths.get(target), StandardCopyOption.REPLACE_EXISTING);
             result = true;
         } catch (IOException e) {
-            logger.error("Error al copiar ficheros, con el mensaje:\n" + e.getMessage());
+            logger.error("Error al copiar ficheros, con el mensaje:\n{}", e.getMessage());
             result = false;
         }
         return result;
@@ -283,9 +304,9 @@ public class Tools {
      * @param tt A tooltip to use
      * @param pf the password field
      */
-    public static void showPassword(Tooltip tt, PasswordField pf) {
+    public static void showPassword(final Tooltip tt, final PasswordField pf) {
         if (!tt.isShowing()) {
-            Point2D p = pf.localToScene(pf.getBoundsInLocal().getMaxX(), pf.getBoundsInLocal().getMaxY());
+            final Point2D p = pf.localToScene(pf.getBoundsInLocal().getMaxX(), pf.getBoundsInLocal().getMaxY());
             tt.setText(pf.getText());
             tt.show(pf,
                     p.getX() + pf.getScene().getX() + pf.getScene().getWindow().getX(),
@@ -302,7 +323,7 @@ public class Tools {
      *
      * @param window window to need apply styles
      */
-    public static void addCssAndIcon(Stage window) {
+    public static void addCssAndIcon(final Stage window) {
         window.getScene().getStylesheets().add(String.valueOf(App.class.getResource("dark.css")));
         window.getIcons().add(Tools.getImage("icon.png", true));
     }
@@ -313,16 +334,13 @@ public class Tools {
      * @param textFieldList texfields that needs to be checked
      * @return true if all are valid, false if one is not valid
      */
-    public static boolean checkTexts(List<TextField> textFieldList) {
-        List<Boolean> validOrNot = new ArrayList<>();
-        for (TextField tf : textFieldList) {
-            if (!tf.getText().trim().equals("")) {
-                validOrNot.add(true);
-            } else {
-                validOrNot.add(false);
+    public static boolean checkTexts(final List<TextField> textFieldList) {
+        for (final TextField tf : textFieldList) {
+            if (tf.getText().trim().isEmpty()) {
+                return false;
             }
         }
-        return !validOrNot.contains(false);
+        return true;
     }
 
     /**
@@ -331,10 +349,10 @@ public class Tools {
      * @param tf TextField to update
      */
     public static void onlyDoubleValue(TextField tf) {
-        UnaryOperator<Change> filter = c -> Validate_Double_Value(c.getControlNewText()) ? c : null;
-        StringConverter<Double> converter = new StringConverter<>() {
+        final UnaryOperator<Change> filter = c -> Validate_Double_Value(c.getControlNewText()) ? c : null;
+        final StringConverter<Double> converter = new StringConverter<>() {
             @Override
-            public Double fromString(String s) {
+            public Double fromString(final String s) {
                 if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
                     return 0.0;
                 } else {
@@ -343,116 +361,12 @@ public class Tools {
             }
 
             @Override
-            public String toString(Double d) {
+            public String toString(final Double d) {
                 return d.toString();
             }
         };
-        TextFormatter<Double> textFormatter = new TextFormatter<>(converter, 0.0, filter);
+        final TextFormatter<Double> textFormatter = new TextFormatter<>(converter, 0.0, filter);
         tf.setTextFormatter(textFormatter);
-    }
-
-    /**
-     * This method is used to set converter on combobox
-     *
-     * @return artist stringconverter for combobox
-     */
-    public static StringConverter<IArtist> artistConverter() {
-        return new StringConverter<>() {
-            @Override
-            public String toString(IArtist object) {
-                return object == null ? null : object.toCombox();
-            }
-
-            @Override
-            public Artist fromString(String string) {
-                ArtistDAO a = null;
-                if (string != null) {
-                    long id = Long.parseLong(string.substring(string.lastIndexOf(".")));
-                    a = new ArtistDAO(id);
-                }
-                return a;
-            }
-        };
-    }
-
-    /**
-     * This method is used to set converter on combobox
-     *
-     * @return disc stringconverter for combobox
-     */
-    public static StringConverter<IDisc> discConverter() {
-        return new StringConverter<>() {
-            @Override
-            public String toString(IDisc object) {
-                return object == null ? null : object.toCombox();
-            }
-
-            @Override
-            public Disc fromString(String string) {
-                long id = Long.parseLong(string.substring(string.lastIndexOf(".")));
-                return new DiscDAO(id);
-            }
-        };
-    }
-
-    /**
-     * This method is used to set converter on combobox
-     *
-     * @return song stringconverter for combobox
-     */
-    public static StringConverter<ISong> songConverter() {
-        return new StringConverter<>() {
-            @Override
-            public String toString(ISong object) {
-                return object == null ? null : object.toCombox();
-            }
-
-            @Override
-            public Song fromString(String string) {
-                long id = Long.parseLong(string.substring(string.lastIndexOf(".")));
-                return new SongDAO(id);
-            }
-        };
-    }
-
-    /**
-     * This method is used to set converter on combobox
-     *
-     * @return genre stringconverter for combobox
-     */
-    public static StringConverter<IGenre> genreConverter() {
-        return new StringConverter<>() {
-            @Override
-            public String toString(IGenre object) {
-                return object == null ? null : object.toCombox();
-            }
-
-            @Override
-            public Genre fromString(String string) {
-                long id = Long.parseLong(string.substring(string.lastIndexOf(".")));
-                return new GenreDAO(id);
-            }
-        };
-    }
-
-    /**
-     * This method is used to ser converter on combobox
-     *
-     * @return playlist stringconverter for combobox
-     */
-    public static StringConverter<IPlayList> playListConverter() {
-        return new StringConverter<>() {
-            @Override
-            public String toString(IPlayList object) {
-                return object == null ? null : object.toCombobox();
-            }
-
-            @Override
-            public IPlayList fromString(String string) {
-                long id = Long.parseLong(string.substring(string.lastIndexOf(".")));
-                return new PlayListDAO(id);
-            }
-        };
     }
 
     /**
@@ -461,29 +375,9 @@ public class Tools {
      * @param cb_list list to iterate
      */
     public static void setComboBoxesforArtist(List<ComboBox<IArtist>> cb_list) {
-        for (ComboBox<IArtist> cb : cb_list) {
-            cb.setConverter(artistConverter());
+        for (final ComboBox<IArtist> cb : cb_list) {
             cb.setItems(FXCollections.observableArrayList(ArtistDAO.listAll()));
-            cb.setCellFactory(new Callback<>() {
-                @Override
-                public ListCell<IArtist> call(ListView<IArtist> l) {
-                    return new ListCell<>() {
-                        @Override
-                        protected void updateItem(IArtist item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item == null || empty) {
-                                setGraphic(null);
-                            } else {
-                                setText(item.getName() + "." + item.getId());
-                                ImageView imageView = new ImageView(Tools.getImage(item.getPhotoURL(), false));
-                                imageView.setFitWidth(40);
-                                imageView.setFitHeight(40);
-                                setGraphic(imageView);
-                            }
-                        }
-                    };
-                }
-            });
+            cb.setCellFactory(new ESCallBack<>());
             cb.setVisibleRowCount(5);
         }
     }
@@ -493,29 +387,9 @@ public class Tools {
      *
      * @param cb_list list to iterate
      */
-    public static void setComboBoxesforDisc(List<ComboBox<IDisc>> cb_list) {
-        for (ComboBox<IDisc> cb : cb_list) {
-            cb.setConverter(discConverter());
-            cb.setCellFactory(new Callback<>() {
-                @Override
-                public ListCell<IDisc> call(ListView<IDisc> l) {
-                    return new ListCell<>() {
-                        @Override
-                        protected void updateItem(IDisc item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item == null || empty) {
-                                setGraphic(null);
-                            } else {
-                                setText(item.getName() + "." + item.getId());
-                                ImageView imageView = new ImageView(Tools.getImage(item.getPhotoURL(), false));
-                                imageView.setFitWidth(40);
-                                imageView.setFitHeight(40);
-                                setGraphic(imageView);
-                            }
-                        }
-                    };
-                }
-            });
+    public static void setComboBoxesforDisc(final List<ComboBox<IDisc>> cb_list) {
+        for (final ComboBox<IDisc> cb : cb_list) {
+            cb.setCellFactory(new ESCallBack<>());
             cb.setVisibleRowCount(5);
         }
     }
@@ -526,8 +400,7 @@ public class Tools {
      * @param cb_list list to iterate
      */
     public static void setComboBoxesforSong(List<ComboBox<ISong>> cb_list) {
-        for (ComboBox<ISong> cb : cb_list) {
-            cb.setConverter(songConverter());
+        for (final ComboBox<ISong> cb : cb_list) {
             cb.setVisibleRowCount(5);
         }
     }
@@ -538,8 +411,7 @@ public class Tools {
      * @param cb_list list to iterate
      */
     public static void setComboBoxesforGenre(List<ComboBox<IGenre>> cb_list) {
-        for (ComboBox<IGenre> cb : cb_list) {
-            cb.setConverter(genreConverter());
+        for (final ComboBox<IGenre> cb : cb_list) {
             cb.setItems(FXCollections.observableArrayList(GenreDAO.listAll()));
             cb.setVisibleRowCount(5);
         }
@@ -551,8 +423,8 @@ public class Tools {
      * @param isSound true if files to explore are sound, false if images
      * @return the absolute path of the file
      */
-    public static String selectFile(boolean isSound) {
-        FileChooser fc = new FileChooser();
+    public static String selectFile(final boolean isSound) {
+        final FileChooser fc = new FileChooser();
         if (isSound)
             fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Sound Files", "*.mp3", "*.aif", "*.wav", "*.aiff"));
         else
@@ -574,14 +446,14 @@ public class Tools {
      * @param tf       textfield of the duration for song
      * @param btn_play button play to set the playsong actions
      */
-    public static void refreshValuesOfSong(String file, TextField tf, JFXButton btn_play) {
-        MediaPlayer mp = getSound(file, false);
+    public static void refreshValuesOfSong(final String file, final TextField tf, final JFXButton btn_play) {
+        final MediaPlayer mp = getSound(file, false);
         final boolean[] stopRequested = {false};
         btn_play.setDisable(true);
         btn_play.setText("");
         btn_play.getScene().getWindow().setOnCloseRequest(event -> {
             if (mp != null) {
-                MediaPlayer.Status status = mp.getStatus();
+                final MediaPlayer.Status status = mp.getStatus();
                 if (status == MediaPlayer.Status.PLAYING) {
                     mp.stop();
                 }
@@ -622,17 +494,17 @@ public class Tools {
      * @param file file to get the name
      * @return string of the file name
      */
-    public static String getNameFileOfSound(String file) {
+    public static String getNameFileOfSound(final String file) {
         return new File(file).getName().replaceFirst("[.][^.]+$", "");
     }
 
-    public static boolean FileDelete(String target) {
+    public static boolean FileDelete(final String target) {
         boolean result;
         try {
-            File f = new File(target);
+            final File f = new File(target);
             result = Files.deleteIfExists(f.toPath());
-        } catch (IOException e) {
-            logger.error("Error al borrar ficheros" + e.getMessage());
+        } catch (final IOException e) {
+            logger.error("Error al borrar ficheros: {}", e.getMessage());
             result = false;
         }
         return result;
@@ -642,22 +514,21 @@ public class Tools {
         logger.error("Exception in thread main java.lang.NullPointerException at com.EarthSound.App.nullpointer.Null.method(Null.java:80000)\n" +
                 "at com.EarthSound.App.nullpointer.Null.main(NullExample.java:721298)");
         if (Desktop.isDesktopSupported()) {
-            Desktop desktop = Desktop.getDesktop();
+            final Desktop desktop = Desktop.getDesktop();
             if (desktop.isSupported(Desktop.Action.BROWSE)) {
                 URI uri;
                 try {
                     uri = new URI("https://youtu.be/dQw4w9WgXcQ");
                     desktop.browse(uri);
-                } catch (URISyntaxException | IOException e) {
+                } catch (final URISyntaxException | IOException e) {
                     if (e.getClass().equals(URISyntaxException.class)) {
-                        logger.error("La cadena introducida viola el código RFC2396" + e.getMessage());
+                        logger.error("La cadena introducida viola el código RFC2396 {}", e.getMessage());
                     } else {
-                        logger.error("No se encontró el navegador por defecto " + e.getMessage());
+                        logger.error("No se encontró el navegador por defecto {}", e.getMessage());
                     }
                 }
             }
         }
         Dialog.showError("Pulsaste donde no debías", "Tu programa acaba de reventar", "Tu código es una mierda");
-
     }
 }

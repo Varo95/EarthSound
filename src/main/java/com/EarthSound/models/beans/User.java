@@ -55,12 +55,12 @@ public class User implements IUser {
     }
 
     @Override
-    public String getPhotoURL() {
+    public String getPhoto() {
         return this.photoURL;
     }
 
     @Override
-    public void setPhotoURL(String photoURL) {
+    public void setPhoto(String photoURL) {
         this.photoURL = photoURL;
     }
 

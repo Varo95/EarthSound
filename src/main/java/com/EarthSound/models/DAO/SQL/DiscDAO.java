@@ -50,7 +50,7 @@ public class DiscDAO extends Disc implements IDiscDAO {
                     Disc d = instanceBuilder(rs);
                     setId(d.getId());
                     setName(d.getName());
-                    setPhotoURL(d.getPhotoURL());
+                    setPhoto(d.getPhoto());
                     setPublicationDate(d.getPublicationDate());
                     setArtist(d.getArtist());
                     setSongs(null);
@@ -97,7 +97,7 @@ public class DiscDAO extends Disc implements IDiscDAO {
         querys q;
         List<Object> params = new ArrayList<>();
         params.add(getName());
-        params.add(getPhotoURL());
+        params.add(getPhoto());
         params.add(getPublicationDate());
         params.add(getArtist().getId());
         if (getId() == -1) {
@@ -131,7 +131,7 @@ public class DiscDAO extends Disc implements IDiscDAO {
             try {
                 result.setId(rs.getLong("id"));
                 result.setName(rs.getString("name"));
-                result.setPhotoURL(rs.getString("photoURL"));
+                result.setPhoto(rs.getString("photoURL"));
                 result.setPublicationDate(rs.getDate("pub_date").toLocalDate());
                 result.setArtist(new ArtistDAO(rs.getLong("id_artist")));
                 result.setSongs(null);

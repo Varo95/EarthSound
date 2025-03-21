@@ -96,9 +96,7 @@ public class UserPlayListController {
     }
 
     private void bindingComboboxes() {
-        cb_artist.setConverter(Tools.artistConverter());
-        cb_disc.setConverter(Tools.discConverter());
-        cb_song.setConverter(Tools.songConverter());
+
         cb_artist.setItems(FXCollections.observableArrayList(ArtistDAO.listAll()));
         cb_artist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -124,7 +122,6 @@ public class UserPlayListController {
         tc_song_artist.setCellValueFactory(eachSong -> new SimpleStringProperty(eachSong.getValue().getDisc().getArtist().getName()));
         tc_song_disc.setCellValueFactory(eachSong -> new SimpleStringProperty(eachSong.getValue().getDisc().getName()));
         tc_song_name.setCellValueFactory(eachSong -> new SimpleStringProperty(eachSong.getValue().getName()));
-        cb_playlist.setConverter(Tools.playListConverter());
         table_playlist.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 PlayListDAO d = new PlayListDAO(table_playlist.getSelectionModel().getSelectedItem().getId());

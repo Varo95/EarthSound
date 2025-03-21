@@ -127,7 +127,7 @@ public class MainController {
                 configureTables();
             }
         });
-        Image i = Tools.getImage(actual_user.getPhotoURL(), false);
+        Image i = Tools.getImage(actual_user.getPhoto(), false);
         iview_profile.setImage(Objects.requireNonNullElse(i, Tools.default_photo_user));
         iview_album_playing.setImage(Tools.getImage("assets/disc_default.png", true));
         combobox_profile.setItems(FXCollections.observableArrayList(new ArrayList<>(List.of("Ver perfil", "Cerrar Sesión", "Salir"))));
@@ -211,7 +211,7 @@ public class MainController {
                     mp_actual_song.seek(duration.multiply(slider_seek.getValue() / 100.0));
             });
             //---------------------
-            iview_album_playing.setImage(Tools.getImage(s.getDisc().getPhotoURL(), false));
+            iview_album_playing.setImage(Tools.getImage(s.getDisc().getPhoto(), false));
             lb_current_song.setText(s.getName());
             btn_play.setOnAction(e -> {
                 Status status = mp_actual_song.getStatus();
@@ -311,10 +311,10 @@ public class MainController {
             if (newValue != null) {
                 SongDAO s = new SongDAO(table_pl_songs.getSelectionModel().getSelectedItem().getId());
                 updateSongLabels(s);
-                image_actual_artist.setImage(Tools.getImage(s.getDisc().getArtist().getPhotoURL(), false));
+                image_actual_artist.setImage(Tools.getImage(s.getDisc().getArtist().getPhoto(), false));
                 name_actual_artist.setText("Nombre: " + s.getDisc().getArtist().getName());
                 nationality_actual_artist.setText("Nacionalidad: " + s.getDisc().getArtist().getNationality());
-                image_actual_disc.setImage(Tools.getImage(s.getDisc().getPhotoURL(), false));
+                image_actual_disc.setImage(Tools.getImage(s.getDisc().getPhoto(), false));
                 pub_actual_disc.setText("Año: " + s.getDisc().getPublicationDate().getYear());
                 name_actual_disc.setText("Nombre: " + s.getDisc().getName());
                 updateSongLabels(s);
@@ -344,7 +344,7 @@ public class MainController {
             cell.setOnMouseClicked(event -> {
                 if (!cell.isEmpty()) {
                     ArtistDAO a = new ArtistDAO(table_artists.getSelectionModel().getSelectedItem().getId());
-                    image_actual_artist.setImage(Tools.getImage(a.getPhotoURL(), false));
+                    image_actual_artist.setImage(Tools.getImage(a.getPhoto(), false));
                     name_actual_artist.setText("Nombre: " + a.getName());
                     nationality_actual_artist.setText("Nacionalidad: " + a.getNationality());
                     table_discs.setItems(FXCollections.observableArrayList(a.getDiscs()));
@@ -366,9 +366,9 @@ public class MainController {
             cell.setOnMouseClicked(event -> {
                 if (!cell.isEmpty()) {
                     DiscDAO d = new DiscDAO(table_discs.getSelectionModel().getSelectedItem().getId());
-                    image_actual_disc.setImage(Tools.getImage(d.getPhotoURL(), false));
+                    image_actual_disc.setImage(Tools.getImage(d.getPhoto(), false));
                     pub_actual_disc.setText("Año: " + d.getPublicationDate().getYear());
-                    image_actual_artist.setImage(Tools.getImage(d.getArtist().getPhotoURL(), false));
+                    image_actual_artist.setImage(Tools.getImage(d.getArtist().getPhoto(), false));
                     name_actual_artist.setText("Nombre: " + d.getArtist().getName());
                     nationality_actual_artist.setText("Nacionalidad: " + d.getArtist().getNationality());
                     table_songs.setItems(FXCollections.observableArrayList(d.getSongs()));

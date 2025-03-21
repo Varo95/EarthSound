@@ -113,8 +113,8 @@ public class PlayList implements IPlayList {
     }
 
     @Override
-    public String toCombobox() {
-        return this.name+"."+this.id;
+    public String toString() {
+        return this.name;
     }
 
     @Override

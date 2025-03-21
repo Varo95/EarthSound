@@ -60,26 +60,25 @@ public class Disc implements IDisc {
     }
 
     @Override
-    public String getPhotoURL() {
+    public String getPhoto() {
         return this.photoURL;
     }
 
     @Override
-    public void setPhotoURL(String photoURL) {
+    public void setPhoto(String photoURL) {
         this.photoURL = photoURL;
     }
 
     @Override
     public long getnDiscPlay() {
         long result = 0;
-        if (this.songs!=null && this.songs.size() != 0) {
-            for (ISong song : this.songs) {
+        if (this.songs!=null && !this.songs.isEmpty()) {
+            for (final ISong song : this.songs) {
                 result += song.getNPlays();
             }
         }
         return result;
     }
-
 
     @Override
     public IArtist getArtist() {
@@ -101,8 +100,9 @@ public class Disc implements IDisc {
         this.songs = songs;
     }
 
-    public String toCombox() {
-        return this.name + "." + this.id;
+    @Override
+    public String toString() {
+        return this.name;
     }
 
     @Override

@@ -36,8 +36,9 @@ public class Genre implements IGenre {
         this.name = name;
     }
 
-    public String toCombox() {
-        return this.name + "."+this.id;
+    @Override
+    public String toString() {
+        return this.name;
     }
 
     @Override

@@ -51,7 +51,7 @@ public class ArtistDAO extends Artist implements IArtistDAO {
                     setId(a.getId());
                     setName(a.getName());
                     setNationality(a.getNationality());
-                    setPhoto(a.getPhotoURL());
+                    setPhoto(a.getPhoto());
                     setDiscs(null);
                 }
                 rs.close();
@@ -68,7 +68,7 @@ public class ArtistDAO extends Artist implements IArtistDAO {
         List<Object> params = new ArrayList<>();
         params.add(getName());
         params.add(getNationality());
-        params.add(getPhotoURL());
+        params.add(getPhoto());
         if (getId() == -1) {
             q = querys.INSERT;
         } else {

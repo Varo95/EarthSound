@@ -97,8 +97,9 @@ public class Song implements ISong {
         this.songURL = songURL;
     }
 
-    public String toCombox() {
-        return this.name + "." + this.id;
+    @Override
+    public String toString() {
+        return this.name;
     }
 
     @Override

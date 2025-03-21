@@ -238,8 +238,8 @@ public class AdminController {
             if (event.getEventType().getName().equals("ACTION"))
                 if (selected_artist_remove != null) {
                     selected_artist_remove.remove();
-                    if (!selected_artist_remove.getPhotoURL().startsWith("http"))
-                        if (Tools.FileDelete(selected_artist_remove.getPhotoURL())) {
+                    if (!selected_artist_remove.getPhoto().startsWith("http"))
+                        if (Tools.FileDelete(selected_artist_remove.getPhoto())) {
                             Dialog.showInformation("Exito!", "Hemos eliminado el archivo asociado", "Se consiguió eliminar la foto asociada al artista de la ruta relativa");
                         } else {
                             Dialog.showError("Error", "No se pudo eliminar", "Hubo un problema al eliminar la foto de la ruta relativa");
@@ -253,8 +253,8 @@ public class AdminController {
             if (event.getEventType().getName().equals("ACTION"))
                 if (selected_disc_remove != null) {
                     selected_disc_remove.remove();
-                    if (!selected_disc_remove.getPhotoURL().startsWith("http"))
-                        if (Tools.FileDelete(selected_disc_remove.getPhotoURL())) {
+                    if (!selected_disc_remove.getPhoto().startsWith("http"))
+                        if (Tools.FileDelete(selected_disc_remove.getPhoto())) {
                             Dialog.showInformation("Exito!", "Hemos eliminado el archivo asociado", "Se consiguió eliminar la foto asociada al disco de la ruta relativa");
                         } else {
                             Dialog.showError("Error", "No se pudo eliminar", "Hubo un problema al eliminar la foto de la ruta relativa");
@@ -387,11 +387,11 @@ public class AdminController {
     private void persistDisc(DiscDAO disc, TextField tf_disc_name, TextField tf_disc_photoURL, DatePicker dp_disc_pubdate, ComboBox<IArtist> cb_disc_sl_artist) {
         if (!tf_disc_name.getText().trim().equals("") && !tf_disc_photoURL.getText().trim().equals("")) {
             disc.setName(tf_disc_name.getText());
-            disc.setPhotoURL(tf_disc_photoURL.getText());
+            disc.setPhoto(tf_disc_photoURL.getText());
             if (!tf_disc_photoURL.getText().startsWith("http")) {
                 if (Tools.FileCopy(tf_disc_photoURL.getText(), "assets/discs/" + disc.getName() + tf_disc_photoURL.getText().substring(tf_disc_photoURL.getText().lastIndexOf(".")))) {
                     Dialog.showInformation("", "Exito al copiar la foto", "Hemos guardado una copia de tu foto en otra carpeta!");
-                    disc.setPhotoURL("assets/discs/" + disc.getName() + tf_disc_photoURL.getText().substring(tf_disc_photoURL.getText().lastIndexOf(".")));
+                    disc.setPhoto("assets/discs/" + disc.getName() + tf_disc_photoURL.getText().substring(tf_disc_photoURL.getText().lastIndexOf(".")));
                 } else {
                     Dialog.showInformation("¡Cuidado!", "Has metido una URL de internet", "No se hará una copia en local de dicha imagen, ¡Cuidado no te la borren del servidor!");
                 }
@@ -514,14 +514,14 @@ public class AdminController {
                 selected_artist_update = new ArtistDAO(newValue.getId());
                 tf_u_artist_name.setText(newValue.getName());
                 tf_u_artist_nationality.setText(newValue.getNationality());
-                tf_u_artist_photoURL.setText(newValue.getPhotoURL());
+                tf_u_artist_photoURL.setText(newValue.getPhoto());
             }
         });
         cb_u_disc_sl_disc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 selected_disc_update = new DiscDAO(newValue.getId());
                 tf_u_disc_name.setText(newValue.getName());
-                tf_u_disc_photoURL.setText(newValue.getPhotoURL());
+                tf_u_disc_photoURL.setText(newValue.getPhoto());
                 dp_u_disc_pubdate.setValue(newValue.getPublicationDate());
                 cb_u_disc_sl_artist_in.setDisable(true);
                 cb_u_disc_sl_artist_in.getSelectionModel().select(a_updateDisc.get());
@@ -573,17 +573,17 @@ public class AdminController {
                 selected_artist_remove = new ArtistDAO(newValue.getId());
                 tf_r_artist_name.setText(newValue.getName());
                 tf_r_artist_nationality.setText(newValue.getNationality());
-                tf_r_artist_photoURL.setText(newValue.getPhotoURL());
-                image_r_artist.setImage(Tools.getImage(newValue.getPhotoURL(), false));
+                tf_r_artist_photoURL.setText(newValue.getPhoto());
+                image_r_artist.setImage(Tools.getImage(newValue.getPhoto(), false));
             }
         });
         cb_r_disc_sl_disc.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 selected_disc_remove = new DiscDAO(newValue.getId());
                 tf_r_disc_name.setText(newValue.getName());
-                tf_r_disc_photoURL.setText(newValue.getPhotoURL());
+                tf_r_disc_photoURL.setText(newValue.getPhoto());
                 dp_r_disc_pubdate.setValue(newValue.getPublicationDate());
-                image_r_disc.setImage(Tools.getImage(newValue.getPhotoURL(), false));
+                image_r_disc.setImage(Tools.getImage(newValue.getPhoto(), false));
             }
         });
         cb_r_song_sl_song.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

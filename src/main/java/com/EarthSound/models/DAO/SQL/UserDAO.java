@@ -61,7 +61,7 @@ public class UserDAO extends User implements IUserDAO {
                     setId(u.getId());
                     setName(u.getName());
                     setPassword(u.getPassword());
-                    setPhotoURL(u.getPhotoURL());
+                    setPhoto(u.getPhoto());
                     setDisabled(u.isDisabled());
                     setSubPL(null);
                 }
@@ -79,7 +79,7 @@ public class UserDAO extends User implements IUserDAO {
         List<Object> params = new ArrayList<>();
         params.add(getName());
         params.add(Tools.encryptMD5(getPassword()));
-        params.add(getPhotoURL());
+        params.add(getPhoto());
         params.add(isDisabled());
         if (getId() == -1) {
             q = querys.INSERT;
@@ -176,7 +176,7 @@ public class UserDAO extends User implements IUserDAO {
                 result.setId(rs.getLong("id"));
                 result.setName(rs.getString("name"));
                 result.setPassword(rs.getString("passwd"));
-                result.setPhotoURL(rs.getString("photoURL"));
+                result.setPhoto(rs.getString("photoURL"));
                 result.setDisabled(rs.getBoolean("disabled"));
                 result.setSubPL(null);
             } catch (SQLException e) {

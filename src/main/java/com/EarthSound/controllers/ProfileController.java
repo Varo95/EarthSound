@@ -49,7 +49,7 @@ public class ProfileController {
         toolTip.setAutoHide(false);
         toolTip.setMinWidth(50);
         //------------------------
-        Image i = Tools.getImage(actual_user.getPhotoURL(), false);
+        Image i = Tools.getImage(actual_user.getPhoto(), false);
         iview_profile.setImage(Objects.requireNonNullElseGet(i, () -> Tools.getImage(default_photo, true)));
         tfnick.setText(actual_user.getName());
         tfpasswd.setText(actual_user.getPassword());
@@ -72,10 +72,10 @@ public class ProfileController {
                     actual_user.setName(tfnick.getText());
                     actual_user.setPassword(tfpasswd.getText());
                     if (!photo.equals("")) {
-                        actual_user.setPhotoURL(photo);
+                        actual_user.setPhoto(photo);
                         if (Tools.FileCopy(photo, "assets/profile_photo/" + actual_user.getName() + photo.substring(photo.lastIndexOf(".")))) {
                             Dialog.showInformation("", "Exito al copiar la foto", "Hemos guardado una copia de tu foto en otra carpeta!");
-                            actual_user.setPhotoURL("assets/profile_photo/" + actual_user.getName() + photo.substring(photo.lastIndexOf(".")));
+                            actual_user.setPhoto("assets/profile_photo/" + actual_user.getName() + photo.substring(photo.lastIndexOf(".")));
                         }
                     }
                     ((UserDAO) actual_user).persist();

@@ -56,7 +56,7 @@ public class Artist implements IArtist {
     }
 
     @Override
-    public String getPhotoURL() {
+    public String getPhoto() {
         return this.photoURL;
     }
 
@@ -75,8 +75,8 @@ public class Artist implements IArtist {
         this.discs = discs;
     }
 
-    public String toCombox() {
-        return this.name + "."+this.id;
+    public String toString() {
+        return this.name;
     }
 
     @Override
