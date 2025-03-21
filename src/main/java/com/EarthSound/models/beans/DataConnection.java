@@ -9,7 +9,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 public class DataConnection {
 
     public enum types {
-        MYSQL("mySQL"),
+        MYSQL("MySQL"),
         H2("H2");
         private String ct;
         types(String ct) { this.ct = ct; }
@@ -28,7 +28,7 @@ public class DataConnection {
         this.user = user;
         this.password = password;
         if(type.equals(types.MYSQL.name())){
-            this.type = "mySQL";
+            this.type = "MySQL";
         }else{
             this.type = "H2";
         }
