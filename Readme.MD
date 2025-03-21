@@ -1,7 +1,7 @@
 # ¡EarthSound App!
 
 ## What do you need?
-You only need Java [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+You only need Java [JDK 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
 
 Some Spanish words to understand the GUI
 

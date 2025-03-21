@@ -137,7 +137,13 @@ public class Tools {
                 File f = new File(resPath);
                 if (f.exists() && f.isFile())
                     if (ValidateFile_img(f.getName()))
-                        return new Image(Objects.requireNonNull(f.getAbsoluteFile().getAbsolutePath()));
+                        try{
+                            return new Image(Objects.requireNonNull(f.toURI().toURL().toExternalForm()));
+                        }catch(final Exception e){
+                            logger.error(e.getMessage());
+                            return null;
+                        }
+
             } else if (Validate_img_URL(resPath)) {
                 return new Image(resPath);
             }
